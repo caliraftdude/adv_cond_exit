@@ -1,0 +1,122 @@
+{
+  "objects": {
+    "SOUTH-CLOSET-DOOR": {
+      "description": "south closet door",
+      "synonyms": ["door"],
+      "adjectives": ["closet"],
+      "flags": ["DOORBIT", "CONTBIT", "OPENBIT"],
+      "location": "LOCAL-GLOBALS",
+      "action": "DOOR-F"
+    },
+
+    "FRONT-DOOR": {
+      "description": "front door",
+      "synonyms": ["door"],
+      "adjectives": ["front"],
+      "flags": ["DOORBIT", "CONTBIT"],
+      "location": "LOCAL-GLOBALS",
+      "action": "DOOR-F"
+    },
+
+    "ROURKE-DOOR": {
+      "description": "door",
+      "synonyms": ["door"],
+      "flags": ["DOORBIT", "CONTBIT"],
+      "location": "LOCAL-GLOBALS",
+      "action": "DOOR-F"
+    },
+
+    "DUNBAR-DOOR": {
+      "description": "south door",
+      "synonyms": ["door"],
+      "adjectives": ["dunbar", "south", "southe"],
+      "flags": ["DOORBIT", "CONTBIT"],
+      "location": "LOCAL-GLOBALS",
+      "action": "DOOR-F"
+    },
+
+    "DUNBAR-BATH-DOOR": {
+      "description": "door",
+      "synonyms": ["door"],
+      "flags": ["DOORBIT", "CONTBIT", "OPENBIT"],
+      "location": "LOCAL-GLOBALS"
+    },
+
+    "ROURKE-BATH-DOOR": {
+      "description": "bathroom door",
+      "synonyms": ["door"],
+      "adjectives": ["bathroom"],
+      "flags": ["DOORBIT", "CONTBIT"],
+      "location": "LOCAL-GLOBALS"
+    },
+
+    "MASTER-BEDROOM-DOOR": {
+      "description": "bedroom door",
+      "synonyms": ["door"],
+      "adjectives": ["bedroom", "master", "north"],
+      "flags": ["DOORBIT", "CONTBIT"],
+      "location": "LOCAL-GLOBALS",
+      "action": "MASTER-BEDROOM-DOOR-F"
+    },
+
+    "GEORGE-DOOR": {
+      "description": "bedroom door",
+      "synonyms": ["door"],
+      "adjectives": ["bedroom", "south", "southe"],
+      "flags": ["DOORBIT", "CONTBIT"],
+      "location": "LOCAL-GLOBALS",
+      "action": "DOOR-F"
+    },
+
+    "GEORGE-BATH-DOOR": {
+      "description": "bathroom door",
+      "synonyms": ["door"],
+      "adjectives": ["bathroom", "east"],
+      "flags": ["DOORBIT", "CONTBIT", "OPENBIT"],
+      "location": "LOCAL-GLOBALS"
+    },
+
+    "HIDDEN-DOOR-L": {
+      "description": "hidden door",
+      "synonyms": ["door"],
+      "adjectives": ["hidden"],
+      "flags": ["DOORBIT", "CONTBIT", "INVISIBLE"],
+      "location": "LOCAL-GLOBALS"
+    },
+
+    "HIDDEN-DOOR-B": {
+      "description": "hidden door",
+      "synonyms": ["door"],
+      "adjectives": ["hidden"],
+      "flags": ["DOORBIT", "CONTBIT", "INVISIBLE"],
+      "location": "LOCAL-GLOBALS"
+    },
+
+    "LIBRARY-BALCONY-DOOR": {
+      "description": "balcony door",
+      "synonyms": ["door", "doors", "window"],
+      "adjectives": ["balcony"],
+      "flags": ["DOORBIT", "CONTBIT"],
+      "location": "LOCAL-GLOBALS",
+      "action": "BALCONY-DOOR-F"
+    },
+
+    "BEDROOM-BALCONY-DOOR": {
+      "description": "balcony door",
+      "synonyms": ["door", "doors", "window"],
+      "adjectives": ["glass", "balcony"],
+      "flags": ["DOORBIT", "CONTBIT"],
+      "location": "LOCAL-GLOBALS",
+      "action": "BALCONY-DOOR-F"
+    },
+
+    "BAY-WINDOW": {
+      "description": "bay window",
+      "synonyms": ["window"],
+      "adjectives": ["bay"],
+      "flags": ["DOORBIT", "CONTBIT"],
+      "location": "LOCAL-GLOBALS",
+      "action": "BAY-WINDOW-F"
+    }
+  }
+}

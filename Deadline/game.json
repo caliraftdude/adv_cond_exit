@@ -1,0 +1,9 @@
+{
+    "game_name": "Deadline",
+    "version": "0.1.0",
+    "debug": true,
+    "features": ["text", "adventure"],
+    "doors": "doors.json",
+    "rooms": "rooms.json",
+    "actions": "actions.py"
+}

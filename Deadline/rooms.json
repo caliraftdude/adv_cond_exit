@@ -1,0 +1,1251 @@
+{
+  "rooms": {
+    "SOUTH-LAWN": {
+      "name": "South Lawn",
+      "description": "You are on a wide lawn just north of the entrance to the Robner estate. Directly north at the end of a pebbled path is the Robner house, flanked to the northeast and northwest by a vast expanse of well-kept lawn. Beyond the house can be seen the lakefront.",
+      "synonyms": ["lawn"],
+      "adjectives": ["south"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "north": "FRONT-PATH",
+        "south": {
+          "type": "non_exit",
+          "message": "Leaving the estate would mean quitting the case and, most probably, your job."
+        },
+        "northwest": "WEST-LAWN",
+        "northeast": "EAST-LAWN"
+      },
+      "global_objects": ["LAWN", "HOUSE"],
+      "navigation": {
+        "line": 2,
+        "station": "FRONT-PATH",
+        "corridor": 64
+      }
+    },
+
+    "FRONT-PATH": {
+      "name": "Front Path",
+      "description": "You are on the front path leading to the Robner house.",
+      "synonyms": ["path"],
+      "adjectives": ["front"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "FRONT_PATH_F",
+      "exits": {
+        "in": {
+          "type": "door",
+          "destination": "FOYER",
+          "door_object": "FRONT-DOOR"
+        },
+        "north": {
+          "type": "door",
+          "destination": "FOYER",
+          "door_object": "FRONT-DOOR"
+        },
+        "south": "SOUTH-LAWN",
+        "southeast": "SOUTH-LAWN",
+        "southwest": "SOUTH-LAWN",
+        "west": "WEST-OF-DOOR",
+        "east": "EAST-OF-DOOR"
+      },
+      "global_objects": ["HOUSE", "FRONT-DOOR"],
+      "navigation": {
+        "line": 2,
+        "station": "FRONT-PATH",
+        "corridor": 32
+      }
+    },
+
+    "WEST-OF-DOOR": {
+      "name": "West of Front Door",
+      "description": "You are in front of the Robner house just west of the front door. To the north is a large bay window through which can be seen part of the living room. To the northwest is the west side of the house.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "WEST-DOOR-F",
+      "exits": {
+        "north": {
+          "type": "door",
+          "destination": "LIVING-ROOM",
+          "door_object": "BAY-WINDOW"
+        },
+        "northeast": {
+          "type": "door",
+          "destination": "LIVING-ROOM",
+          "door_object": "BAY-WINDOW"
+        },
+        "east": "FRONT-PATH",
+        "west": "WEST-LAWN",
+        "south": "SOUTH-LAWN",
+        "southeast": "SOUTH-LAWN",
+        "southwest": "SOUTH-LAWN",
+        "northwest": "WEST-SIDE"
+      },
+      "global_objects": ["BAY-WINDOW", "HOUSE"],
+      "navigation": {
+        "line": 2,
+        "station": "WEST-OF-DOOR",
+        "corridor": 32
+      }
+    },
+
+    "EAST-OF-DOOR": {
+      "name": "East of Front Door",
+      "description": "You are in front of the Robner house just east of the front door. A small window, closed and securely locked, is the only thing of note here. To the northeast is the east side of the house.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "north": {
+          "type": "non_exit",
+          "message": "The window is closed and locked."
+        },
+        "west": "FRONT-PATH",
+        "east": "EAST-LAWN",
+        "south": "SOUTH-LAWN",
+        "southeast": "SOUTH-LAWN",
+        "southwest": "SOUTH-LAWN",
+        "northeast": "EAST-SIDE"
+      },
+      "global_objects": ["WINDOW", "HOUSE"],
+      "navigation": {
+        "line": 2,
+        "station": "EAST-OF-DOOR",
+        "corridor": 96
+      }
+    },
+
+    "WEST-LAWN": {
+      "name": "West Lawn",
+      "description": "This is a sprawling lawn west of the Robner house. To the west and north is the lake shore. To the northeast is a rose garden, and to the south another wide lawn.",
+      "synonyms": ["lawn"],
+      "adjectives": ["west"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "north": {
+          "type": "non_exit",
+          "message": "You can't go into the lake."
+        },
+        "northwest": {
+          "type": "non_exit",
+          "message": "You can't go into the lake."
+        },
+        "west": {
+          "type": "non_exit",
+          "message": "You can't go into the lake."
+        },
+        "northeast": "ROSE-GARDEN",
+        "east": "WEST-SIDE",
+        "southeast": "WEST-OF-DOOR",
+        "south": "SOUTH-LAWN"
+      },
+      "global_objects": ["LAWN", "HOUSE", "LAKE"],
+      "navigation": {
+        "line": 2,
+        "station": "WEST-LAWN",
+        "corridor": 32
+      }
+    },
+
+    "EAST-LAWN": {
+      "name": "East Lawn",
+      "description": "You are on a neatly manicured lawn, east of the house, which extends north and east to the shore of a lake. To the northwest is a peaceful orchard, and toward the south another wide lawn. Southeast, beside the lake, is a small shed with a solitary dirty window.",
+      "synonyms": ["lawn"],
+      "adjectives": ["east"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "north": {
+          "type": "non_exit",
+          "message": "You can't go into the lake."
+        },
+        "northeast": {
+          "type": "non_exit",
+          "message": "You can't go into the lake."
+        },
+        "east": {
+          "type": "non_exit",
+          "message": "You can't go into the lake."
+        },
+        "northwest": "ORCHARD",
+        "west": "EAST-SIDE",
+        "southwest": "EAST-OF-DOOR",
+        "south": "SOUTH-LAWN",
+        "southeast": "SHED-ROOM",
+        "in": "SHED-ROOM"
+      },
+      "global_objects": ["HOUSE", "LAWN", "SHED", "LAKE", "SHED-WINDOW"],
+      "navigation": {
+        "line": 2,
+        "station": "EAST-LAWN",
+        "corridor": 672
+      }
+    },
+
+    "EAST-SIDE": {
+      "name": "East Side of House",
+      "description": "There are no windows or entries of any kind here at the east side of the house. To the north is the orchard, and the front lawn lies to the south. A lawn also slopes down toward the shore of a lake to the east.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "north": "ORCHARD",
+        "northeast": "EAST-LAWN",
+        "south": "EAST-OF-DOOR",
+        "southeast": "EAST-LAWN",
+        "east": "EAST-LAWN",
+        "west": {
+          "type": "non_exit",
+          "message": "You can't enter the house here."
+        }
+      },
+      "global_objects": ["HOUSE"],
+      "navigation": {
+        "line": 2,
+        "station": "EAST-SIDE",
+        "corridor": 64
+      }
+    },
+
+    "WEST-SIDE": {
+      "name": "West Side of House",
+      "description": "There are no doors or windows at ground level here on the west side of the house. A beautiful rose garden, separated by a tall fence, lies to the north, and the front of the house is to your south. A large lawn bordering the lake lies to the west.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "southwest": "WEST-LAWN",
+        "west": "WEST-LAWN",
+        "northwest": "WEST-LAWN",
+        "north": {
+          "type": "non_exit",
+          "message": "A fence prevents your mucking up the rose garden."
+        },
+        "southeast": "WEST-OF-DOOR",
+        "south": "WEST-OF-DOOR",
+        "east": {
+          "type": "non_exit",
+          "message": "You can't enter the house here."
+        }
+      },
+      "global_objects": ["HOUSE"],
+      "navigation": {
+        "line": 2,
+        "station": "WEST-SIDE",
+        "corridor": 0
+      },
+      "pseudo_objects": ["FENCE"]
+    },
+
+    "SHED-ROOM": {
+      "name": "Shed",
+      "description": "This small garden shed is filled with implements of gardening and lawn care. Shelves filled with various tools line the walls and a filthy window looks out on the lawn.",
+      "synonyms": ["shed", "cabin"],
+      "adjectives": ["tool", "garden", "wooden"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "out": "EAST-LAWN",
+        "north": "EAST-LAWN",
+        "northwest": "EAST-LAWN"
+      },
+      "global_objects": ["SHED", "SHED-WINDOW"],
+      "navigation": {
+        "line": 2,
+        "station": "EAST-LAWN",
+        "corridor": 0
+      }
+    },
+
+    "BEHIND-SHED": {
+      "name": "Behind the Shed",
+      "description": "You are now between the shed and the lake, a position invisible from the house or the adjacent lawns. There are no windows here, but you can easily enter the shed via the door around the corner.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "out": "EAST-LAWN",
+        "in": "SHED-ROOM",
+        "east": {
+          "type": "non_exit",
+          "message": "You can't go into the lake."
+        },
+        "west": "EAST-LAWN",
+        "north": "EAST-LAWN",
+        "south": "SOUTH-LAWN"
+      },
+      "global_objects": ["SHED"],
+      "navigation": {
+        "line": 2,
+        "station": "EAST-LAWN",
+        "corridor": 0
+      }
+    },
+
+    "ROSE-GARDEN": {
+      "name": "Garden Path",
+      "description": "You are on a path through the rose garden.",
+      "synonyms": ["path"],
+      "adjectives": ["garden", "rose", "flower"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "ROSE-GARDEN-F",
+      "exits": {
+        "north": "NORTH-LAWN",
+        "northeast": "NORTH-LAWN",
+        "northwest": "NORTH-LAWN",
+        "southwest": "WEST-LAWN",
+        "west": "WEST-LAWN",
+        "east": "ORCHARD",
+        "south": "IN-ROSES",
+        "southeast": "IN-ROSES"
+      },
+      "global_objects": ["ROSE", "HOUSE", "DINING-ROOM-WINDOW"],
+      "navigation": {
+        "line": 2,
+        "station": "ROSE-GARDEN",
+        "corridor": 2048
+      }
+    },
+
+    "IN-ROSES": {
+      "name": "Among the Roses",
+      "description": "You are standing among the beautiful roses.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "IN-ROSES-F",
+      "exits": {
+        "up": {
+          "type": "conditional",
+          "destination": "LIBRARY-BALCONY",
+          "condition_var": "LADDER-FLAG",
+          "failure_message": "You need something to climb up to the balcony."
+        },
+        "north": "ROSE-GARDEN",
+        "northeast": "ROSE-GARDEN",
+        "northwest": "ROSE-GARDEN",
+        "west": "WEST-LAWN",
+        "east": "IN-ORCHARD",
+        "south": {
+          "type": "non_exit",
+          "message": "You can't enter the house here."
+        }
+      },
+      "global_objects": ["DINING-ROOM-WINDOW", "HOUSE", "ROSE", "BALCONY"],
+      "navigation": {
+        "line": 2,
+        "station": "ROSE-GARDEN",
+        "corridor": 0
+      }
+    },
+
+    "ORCHARD": {
+      "name": "Orchard Path",
+      "description": "You are on a path at the edge of a small orchard of fruit trees which abuts the eastern side of the back of the house. The orchard is obviously intended more to display the beauty of the blossoms in spring than to produce significant amounts of fruit. The windows of the kitchen look out onto the orchard, although your view of them is blocked by the trees and a small grape arbor. To the west is a path along a rose garden, and lawns sweep out to the north and east.",
+      "synonyms": ["path"],
+      "adjectives": ["orchard"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "east": "EAST-LAWN",
+        "southeast": "EAST-LAWN",
+        "north": "NORTH-LAWN",
+        "northwest": "NORTH-LAWN",
+        "northeast": "NORTH-LAWN",
+        "west": "ROSE-GARDEN",
+        "south": "IN-ORCHARD",
+        "southwest": "IN-ORCHARD"
+      },
+      "global_objects": ["KITCHEN-WINDOW", "HOUSE", "FRUIT-TREES"],
+      "navigation": {
+        "line": 2,
+        "station": "ORCHARD",
+        "corridor": 2176
+      }
+    },
+
+    "IN-ORCHARD": {
+      "name": "In the Orchard",
+      "description": "You are deep within the orchard among the fruit trees.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "IN-ORCHARD-F",
+      "exits": {
+        "north": "ORCHARD",
+        "west": "IN-ROSES",
+        "northwest": "ORCHARD",
+        "northeast": "ORCHARD",
+        "up": {
+          "type": "conditional",
+          "destination": "BEDROOM-BALCONY",
+          "condition_var": "LADDER-FLAG-2",
+          "failure_message": "You need something to climb up to the balcony."
+        },
+        "south": "EAST-SIDE"
+      },
+      "global_objects": ["KITCHEN-WINDOW", "HOUSE", "FRUIT-TREES", "BALCONY"],
+      "navigation": {
+        "line": 2,
+        "station": "ORCHARD",
+        "corridor": 0
+      }
+    },
+
+    "NORTH-LAWN": {
+      "name": "North Lawn",
+      "description": "This idyllic spot lies on a jut of land well north of the house and is surrounded on three sides by lake shore. Its charm includes the sweet smell of roses blown on a southwest breeze from the rose garden and by the sound of the leaves rustling in the orchard to the southeast.",
+      "synonyms": ["lawn"],
+      "adjectives": ["north"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "northeast": {
+          "type": "non_exit",
+          "message": "You can't go into the lake."
+        },
+        "northwest": {
+          "type": "non_exit",
+          "message": "You can't go into the lake."
+        },
+        "north": {
+          "type": "non_exit",
+          "message": "You can't go into the lake."
+        },
+        "east": {
+          "type": "non_exit",
+          "message": "You can't go into the lake."
+        },
+        "west": {
+          "type": "non_exit",
+          "message": "You can't go into the lake."
+        },
+        "southwest": "ROSE-GARDEN",
+        "southeast": "ORCHARD",
+        "south": "ROSE-GARDEN"
+      },
+      "global_objects": ["LAWN", "HOUSE", "LAKE"],
+      "navigation": {
+        "line": 2,
+        "station": "NORTH-LAWN",
+        "corridor": 128
+      }
+    },
+
+    "FOYER": {
+      "name": "Foyer",
+      "description": "You are in the foyer of the Robner house.",
+      "synonyms": ["foyer"],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "FOYER-F",
+      "exits": {
+        "south": {
+          "type": "door",
+          "destination": "FRONT-PATH",
+          "door_object": "FRONT-DOOR"
+        },
+        "north": "NFOYER",
+        "out": {
+          "type": "door",
+          "destination": "FRONT-PATH", 
+          "door_object": "FRONT-DOOR"
+        }
+      },
+      "global_objects": ["FRONT-DOOR"],
+      "navigation": {
+        "line": 1,
+        "station": "FOYER",
+        "corridor": 8
+      }
+    },
+
+    "NFOYER": {
+      "name": "North of Foyer",
+      "description": "This is a hallway north of the foyer. To the west is an open doorway, and to the east is the foot of a staircase. The hall continues north.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "south": "FOYER",
+        "west": "LIVING-ROOM",
+        "east": "STAIR-BOTTOM",
+        "north": "CORNER"
+      },
+      "global_objects": [],
+      "navigation": {
+        "line": 1,
+        "station": "NFOYER",
+        "corridor": 264
+      }
+    },
+
+    "SHALL-1": {
+      "name": "South Hallway",
+      "description": "You are in the south hallway.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "SHALL-1-F",
+      "exits": {
+        "east": "SHALL-2",
+        "north": "STAIR-BOTTOM",
+        "south": {
+          "type": "door",
+          "destination": "ROURKE-ROOM",
+          "door_object": "ROURKE-DOOR"
+        }
+      },
+      "global_objects": ["ROURKE-DOOR"],
+      "navigation": {
+        "line": 1,
+        "station": "SHALL-1",
+        "corridor": 16
+      }
+    },
+
+    "SHALL-2": {
+      "name": "South Hallway",
+      "description": "You are in the south hallway.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "SHALL-2-F",
+      "exits": {
+        "east": {
+          "type": "door",
+          "destination": "ROURKE-BATH",
+          "door_object": "ROURKE-BATH-DOOR"
+        },
+        "west": "SHALL-1",
+        "south": {
+          "type": "door",
+          "destination": "SOUTH-CLOSET",
+          "door_object": "SOUTH-CLOSET-DOOR"
+        }
+      },
+      "global_objects": ["ROURKE-BATH-DOOR", "SOUTH-CLOSET-DOOR"],
+      "navigation": {
+        "line": 1,
+        "station": "SHALL-2",
+        "corridor": 0
+      }
+    },
+
+    "ROURKE-ROOM": {
+      "name": "Mrs. Rourke's Room",
+      "description": "This is Mrs. Rourke's bedroom.",
+      "synonyms": ["bedroom", "room"],
+      "adjectives": ["rourke"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "ROURKE-ROOM-F",
+      "exits": {
+        "north": {
+          "type": "door",
+          "destination": "SHALL-1",
+          "door_object": "ROURKE-DOOR"
+        },
+        "out": {
+          "type": "door",
+          "destination": "SHALL-1",
+          "door_object": "ROURKE-DOOR"
+        }
+      },
+      "global_objects": ["ROURKE-DOOR", "END-TABLE", "CHAIR", "BED", "WINDOW"],
+      "navigation": {
+        "line": 1,
+        "station": "SHALL-1",
+        "corridor": 0
+      }
+    },
+
+    "ROURKE-BATH": {
+      "name": "Mrs. Rourke's Bathroom",
+      "description": "This is Mrs. Rourke's private bathroom.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "ROURKE-BATH-F",
+      "exits": {
+        "west": {
+          "type": "door",
+          "destination": "SHALL-2",
+          "door_object": "ROURKE-BATH-DOOR"
+        }
+      },
+      "global_objects": ["ROURKE-BATH-DOOR", "TOILET", "SHOWER", "SINK"],
+      "navigation": {
+        "line": 1,
+        "station": "SHALL-2",
+        "corridor": 0
+      }
+    },
+
+    "SOUTH-CLOSET": {
+      "name": "South Closet",
+      "description": "This is a little-used storage closet containing odds and ends of no interest whatsoever. The exit is to the north.",
+      "synonyms": ["closet"],
+      "adjectives": ["south"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "north": {
+          "type": "door",
+          "destination": "SHALL-2",
+          "door_object": "SOUTH-CLOSET-DOOR"
+        },
+        "out": {
+          "type": "door",
+          "destination": "SHALL-2",
+          "door_object": "SOUTH-CLOSET-DOOR"
+        }
+      },
+      "global_objects": ["SOUTH-CLOSET-DOOR", "CLOSET"],
+      "navigation": {
+        "line": 1,
+        "station": "SHALL-2",
+        "corridor": 0
+      },
+      "size": 1
+    },
+
+    "STAIR-BOTTOM": {
+      "name": "Bottom of Stairs",
+      "description": "You are at the foot of the stairs to the second floor. Open archways lead west and south.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "up": "STAIRS",
+        "south": "SHALL-1",
+        "west": "NFOYER"
+      },
+      "global_objects": ["STAIRS"],
+      "navigation": {
+        "line": 1,
+        "station": "STAIR-BOTTOM",
+        "corridor": 272
+      }
+    },
+
+    "LIVING-ROOM": {
+      "name": "Living Room",
+      "description": "You are in the living room.",
+      "synonyms": ["room"],
+      "adjectives": ["living"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "LIVING-ROOM-F",
+      "exits": {
+        "east": "NFOYER",
+        "out": "NFOYER",
+        "south": {
+          "type": "door",
+          "destination": "WEST-OF-DOOR",
+          "door_object": "BAY-WINDOW"
+        }
+      },
+      "global_objects": ["BAY-WINDOW", "TELEPHONE", "SOFA", "CHAIR", "LGTABLE"],
+      "navigation": {
+        "line": 1,
+        "station": "NFOYER",
+        "corridor": 0
+      }
+    },
+
+    "CORNER": {
+      "name": "Corner",
+      "description": "You are at the corner of two halls, one a short hallway to the west ending with a set of doors, and the other a long hall leading south toward the front door. To the north are swinging double doors leading into the kitchen.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "south": "NFOYER",
+        "west": "DINING-ROOM",
+        "north": "KITCHEN"
+      },
+      "global_objects": [],
+      "navigation": {
+        "line": 3,
+        "station": "CORNER",
+        "corridor": 8
+      }
+    },
+
+    "DINING-ROOM": {
+      "name": "Dining Room",
+      "description": "You have entered the dining room. A long table seating twelve is in the center of the room and a large trestle table is against the south wall. A large picture window to the north allows a view of the rose garden. Hanging on the wall are several cheerful paintings, including one by Seurat which appears to be an original.",
+      "synonyms": ["room"],
+      "adjectives": ["dining"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "east": "CORNER",
+        "out": "CORNER"
+      },
+      "global_objects": ["DINING-ROOM-WINDOW"],
+      "navigation": {
+        "line": 3,
+        "station": "DINING-ROOM",
+        "corridor": 0
+      }
+    },
+
+    "KITCHEN": {
+      "name": "Kitchen",
+      "description": "This is the Robner kitchen, quite large and with a full complement of appliances and labor-saving devices. On one wall, a beautifully-crafted shelf unit contains rare china, a unique hand-painted family heirloom depicting scenes from Greek mythology. The china consists of many place settings of plates, teacups, and saucers. There are several cabinets which likely contain silverware, glasses, and the like. To the east is a pantry.",
+      "synonyms": ["kitchen"],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "south": "CORNER",
+        "east": "PANTRY"
+      },
+      "global_objects": ["KITCHEN-WINDOW", "SINK"],
+      "navigation": {
+        "line": 3,
+        "station": "KITCHEN",
+        "corridor": 0
+      }
+    },
+
+    "PANTRY": {
+      "name": "Pantry",
+      "description": "This is the pantry with shelves containing a large selection of canned and packaged foods, such as fruits, vegetables, and dry goods.",
+      "synonyms": ["pantry"],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "west": "KITCHEN"
+      },
+      "global_objects": [],
+      "navigation": {
+        "line": 3,
+        "station": "PANTRY",
+        "corridor": 0
+      }
+    },
+
+    "STAIRS": {
+      "name": "Stairs",
+      "description": "You are on a landing halfway up the flight of stairs. You notice that the stairs do indeed make quite a noise when stepped upon.",
+      "synonyms": ["stairs"],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "up": "STAIR-TOP",
+        "down": "STAIR-BOTTOM"
+      },
+      "global_objects": ["STAIRS"],
+      "navigation": {
+        "line": 1,
+        "station": "STAIRS",
+        "corridor": 256
+      }
+    },
+
+    "STAIR-TOP": {
+      "name": "Top of Stairs",
+      "description": "You are at the top of the staircase where short hallways run north and south and a corridor the length of the house heads west.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "down": "STAIRS",
+        "north": "NORTH-HALL",
+        "south": "SHALL-11",
+        "west": "CORRIDOR-1"
+      },
+      "global_objects": ["STAIRS"],
+      "navigation": {
+        "line": 0,
+        "station": "STAIR-TOP",
+        "corridor": 3
+      }
+    },
+
+    "CORRIDOR-1": {
+      "name": "Hallway",
+      "description": "You are in the upstairs hallway.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "CORRIDOR-1-F",
+      "exits": {
+        "east": "STAIR-TOP",
+        "west": "CORRIDOR-2",
+        "south": {
+          "type": "door",
+          "destination": "DUNBAR-ROOM",
+          "door_object": "DUNBAR-DOOR"
+        },
+        "north": {
+          "type": "door",
+          "destination": "MASTER-BEDROOM",
+          "door_object": "MASTER-BEDROOM-DOOR"
+        }
+      },
+      "global_objects": ["DUNBAR-DOOR", "MASTER-BEDROOM-DOOR"],
+      "navigation": {
+        "line": 0,
+        "station": "CORRIDOR-1",
+        "corridor": 1
+      }
+    },
+
+    "CORRIDOR-2": {
+      "name": "Hallway",
+      "description": "This is approximately the middle of the corridor, a convenient place for a closet full of linens. Stairs to the east and a window to the west are about equidistant. The closet, to the north, is open and rather shallow.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "north": "UPSTAIRS-CLOSET",
+        "east": "CORRIDOR-1",
+        "west": "CORRIDOR-3"
+      },
+      "global_objects": ["CLOSET"],
+      "navigation": {
+        "line": 0,
+        "station": "CORRIDOR-2",
+        "corridor": 1025
+      }
+    },
+
+    "CORRIDOR-3": {
+      "name": "Hallway",
+      "description": "You are in the upstairs hallway.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "CORRIDOR-3-F",
+      "exits": {
+        "east": "CORRIDOR-2",
+        "west": "CORRIDOR-4",
+        "south": {
+          "type": "door",
+          "destination": "GEORGE-ROOM",
+          "door_object": "GEORGE-DOOR"
+        }
+      },
+      "global_objects": ["GEORGE-DOOR"],
+      "navigation": {
+        "line": 0,
+        "station": "CORRIDOR-3",
+        "corridor": 1
+      }
+    },
+
+    "CORRIDOR-4": {
+      "name": "End of Hallway",
+      "description": "You are at the end of the upstairs hallway.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "CORRIDOR-4-F",
+      "exits": {
+        "east": "CORRIDOR-3",
+        "west": {
+          "type": "non_exit",
+          "message": "The hall ends here."
+        },
+        "north": "LIBRARY"
+      },
+      "global_objects": ["LIBRARY-DOOR"],
+      "navigation": {
+        "line": 0,
+        "station": "CORRIDOR-4",
+        "corridor": 1
+      }
+    },
+
+    "LIBRARY": {
+      "name": "Library",
+      "description": "You are in the library.",
+      "synonyms": ["library"],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "LIBRARY-F",
+      "exits": {
+        "east": {
+          "type": "door",
+          "destination": "HIDDEN-CLOSET",
+          "door_object": "HIDDEN-DOOR-L"
+        },
+        "south": "CORRIDOR-4",
+        "north": {
+          "type": "door",
+          "destination": "LIBRARY-BALCONY",
+          "door_object": "LIBRARY-BALCONY-DOOR"
+        }
+      },
+      "global_objects": ["HIDDEN-DOOR-L", "LIBRARY-BALCONY-DOOR", "TELEPHONE", "LIBRARY-DOOR"],
+      "navigation": {
+        "line": 0,
+        "station": "LIBRARY",
+        "corridor": 0
+      }
+    },
+
+    "LIBRARY-BALCONY": {
+      "name": "Library Balcony",
+      "description": "You are on the library balcony.",
+      "synonyms": ["balcony"],
+      "adjectives": ["library"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "LIBRARY-BALCONY-F",
+      "exits": {
+        "south": {
+          "type": "door",
+          "destination": "LIBRARY",
+          "door_object": "LIBRARY-BALCONY-DOOR"
+        },
+        "down": {
+          "type": "conditional",
+          "destination": "IN-ROSES",
+          "condition_var": "LADDER-FLAG",
+          "failure_message": "The fall would probably kill you."
+        }
+      },
+      "global_objects": ["LIBRARY-BALCONY-DOOR"],
+      "navigation": {
+        "line": 0,
+        "station": "LIBRARY-BALCONY",
+        "corridor": 0
+      }
+    },
+
+    "UPSTAIRS-CLOSET": {
+      "name": "Upstairs Closet",
+      "description": "The closet is rather shallow and has some shelves full of assorted linens, towels, and uninteresting toilet articles.",
+      "synonyms": ["closet"],
+      "adjectives": ["upstairs"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "out": "CORRIDOR-2",
+        "south": "CORRIDOR-2"
+      },
+      "global_objects": ["CLOSET"],
+      "navigation": {
+        "line": 0,
+        "station": "CORRIDOR-2",
+        "corridor": 1024
+      }
+    },
+
+    "HIDDEN-CLOSET": {
+      "name": "Hidden Closet",
+      "description": "You are in a hidden closet.",
+      "synonyms": ["closet"],
+      "adjectives": ["hidden"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "HIDDEN-CLOSET-F",
+      "exits": {
+        "east": {
+          "type": "door",
+          "destination": "MASTER-BEDROOM",
+          "door_object": "HIDDEN-DOOR-B"
+        },
+        "west": {
+          "type": "door",
+          "destination": "LIBRARY",
+          "door_object": "HIDDEN-DOOR-L"
+        }
+      },
+      "global_objects": ["HIDDEN-DOOR-B", "HIDDEN-DOOR-L", "CLOSET"],
+      "navigation": {
+        "line": 0,
+        "station": "LIBRARY",
+        "corridor": 0
+      }
+    },
+
+    "MASTER-BEDROOM": {
+      "name": "Master Bedroom",
+      "description": "You are in the master bedroom.",
+      "synonyms": ["bedroom", "room"],
+      "adjectives": ["master", "robner"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "MASTER-BEDROOM-F",
+      "exits": {
+        "west": {
+          "type": "door",
+          "destination": "HIDDEN-CLOSET",
+          "door_object": "HIDDEN-DOOR-B"
+        },
+        "north": {
+          "type": "door",
+          "destination": "BEDROOM-BALCONY",
+          "door_object": "BEDROOM-BALCONY-DOOR"
+        },
+        "south": {
+          "type": "door",
+          "destination": "CORRIDOR-1",
+          "door_object": "MASTER-BEDROOM-DOOR"
+        },
+        "east": "MASTER-BATH"
+      },
+      "global_objects": ["HIDDEN-DOOR-B", "BEDROOM-BALCONY-DOOR", "MASTER-BEDROOM-DOOR", "END-TABLE", "CHAIR", "TELEPHONE"],
+      "navigation": {
+        "line": 0,
+        "station": "CORRIDOR-1",
+        "corridor": 0
+      }
+    },
+
+    "MASTER-BATH": {
+      "name": "Master Bathroom",
+      "description": "This is Mr. and Mrs. Robner's private bathroom, accessible only from the bedroom through a door to the west. On one wall is a mirror over a long counter containing two sinks, and in addition to the usual bathroom fixtures is a jacuzzi. Hanging plants give the room an almost tropical atmosphere.",
+      "synonyms": ["bath", "bathroom"],
+      "adjectives": ["master"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "west": "MASTER-BEDROOM",
+        "out": "MASTER-BEDROOM"
+      },
+      "global_objects": ["SHOWER", "TOILET", "SINK"],
+      "navigation": {
+        "line": 0,
+        "station": "CORRIDOR-1",
+        "corridor": 0
+      },
+      "pseudo_objects": ["TOOTHPASTE"]
+    },
+
+    "BEDROOM-BALCONY": {
+      "name": "Bedroom Balcony",
+      "description": "You are on the bedroom balcony.",
+      "synonyms": ["balcony"],
+      "adjectives": ["bedroom"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "BEDROOM-BALCONY-F",
+      "exits": {
+        "south": {
+          "type": "door",
+          "destination": "MASTER-BEDROOM",
+          "door_object": "BEDROOM-BALCONY-DOOR"
+        },
+        "down": {
+          "type": "conditional",
+          "destination": "IN-ORCHARD",
+          "condition_var": "LADDER-FLAG-2",
+          "failure_message": "The jump is inadvisable."
+        }
+      },
+      "global_objects": ["BEDROOM-BALCONY-DOOR"],
+      "navigation": {
+        "line": 0,
+        "station": "MASTER-BEDROOM",
+        "corridor": 0
+      }
+    },
+
+    "NORTH-HALL": {
+      "name": "North Upstairs Hall",
+      "description": "This is the end of a short north-south hallway. To the east is a small room.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "east": "GUEST-ROOM",
+        "south": "STAIR-TOP"
+      },
+      "global_objects": [],
+      "navigation": {
+        "line": 0,
+        "station": "STAIR-TOP",
+        "corridor": 0
+      }
+    },
+
+    "GUEST-ROOM": {
+      "name": "Guest Room",
+      "description": "This room contains the bare essentials for a guest room: bed, tables, and a chair. A window looks out toward the east.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "west": "NORTH-HALL"
+      },
+      "global_objects": ["END-TABLE", "CHAIR", "BED"],
+      "navigation": {
+        "line": 0,
+        "station": "STAIR-TOP",
+        "corridor": 0
+      }
+    },
+
+    "SHALL-11": {
+      "name": "South Upstairs Hall",
+      "description": "You are in the south upstairs hall.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "SHALL-11-F",
+      "exits": {
+        "north": "STAIR-TOP",
+        "east": "SHALL-12",
+        "south": {
+          "type": "door",
+          "destination": "DUNBAR-BATH",
+          "door_object": "DUNBAR-BATH-DOOR"
+        }
+      },
+      "global_objects": ["DUNBAR-BATH-DOOR"],
+      "navigation": {
+        "line": 0,
+        "station": "SHALL-11",
+        "corridor": 6
+      }
+    },
+
+    "SHALL-12": {
+      "name": "End of South Hall",
+      "description": "The hall ends here. To the south is a walk-in closet.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "west": "SHALL-11",
+        "south": "CLOSET-11",
+        "in": "CLOSET-11"
+      },
+      "global_objects": [],
+      "navigation": {
+        "line": 0,
+        "station": "SHALL-12",
+        "corridor": 4
+      }
+    },
+
+    "CLOSET-11": {
+      "name": "Closet",
+      "description": "This large closet has many shelves containing various cleaning equipment and supplies.",
+      "synonyms": [],
+      "adjectives": [],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": null,
+      "exits": {
+        "out": "SHALL-12",
+        "north": "SHALL-12"
+      },
+      "global_objects": ["CLOSET"],
+      "navigation": {
+        "line": 0,
+        "station": "SHALL-12",
+        "corridor": 0
+      }
+    },
+
+    "DUNBAR-BATH": {
+      "name": "Dunbar's Bathroom",
+      "description": "This is Ms. Dunbar's private bathroom.",
+      "synonyms": ["bathroom", "bath"],
+      "adjectives": ["dunbar"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "DUNBAR-BATH-F",
+      "exits": {
+        "north": {
+          "type": "door",
+          "destination": "SHALL-11",
+          "door_object": "DUNBAR-BATH-DOOR"
+        }
+      },
+      "global_objects": ["DUNBAR-BATH-DOOR", "SHOWER", "TOILET", "SINK"],
+      "navigation": {
+        "line": 0,
+        "station": "SHALL-11",
+        "corridor": 0
+      },
+      "pseudo_objects": ["POLISH", "NAILPOLISH"]
+    },
+
+    "DUNBAR-ROOM": {
+      "name": "Dunbar's Bedroom",
+      "description": "This is Ms. Dunbar's bedroom.",
+      "synonyms": ["bedroom", "room"],
+      "adjectives": ["dunbar"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "DUNBAR-ROOM-F",
+      "exits": {
+        "north": {
+          "type": "door",
+          "destination": "CORRIDOR-1",
+          "door_object": "DUNBAR-DOOR"
+        }
+      },
+      "global_objects": ["DUNBAR-DOOR", "END-TABLE", "CHAIR", "BED"],
+      "navigation": {
+        "line": 0,
+        "station": "CORRIDOR-1",
+        "corridor": 0
+      }
+    },
+
+    "GEORGE-BATH": {
+      "name": "George's Bathroom",
+      "description": "This is George's private bathroom.",
+      "synonyms": ["bathroom", "room"],
+      "adjectives": ["george"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "GEORGE-BATH-F",
+      "exits": {
+        "west": {
+          "type": "door",
+          "destination": "GEORGE-ROOM",
+          "door_object": "GEORGE-BATH-DOOR"
+        }
+      },
+      "global_objects": ["GEORGE-BATH-DOOR", "TOILET", "SHOWER", "SINK"],
+      "navigation": {
+        "line": 0,
+        "station": "CORRIDOR-3",
+        "corridor": 0
+      }
+    },
+
+    "GEORGE-ROOM": {
+      "name": "George's Bedroom",
+      "description": "This is George's bedroom.",
+      "synonyms": ["bedroom", "room"],
+      "adjectives": ["george"],
+      "flags": ["RLANDBIT", "ONBIT"],
+      "action": "GEORGE-ROOM-F",
+      "exits": {
+        "north": {
+          "type": "door",
+          "destination": "CORRIDOR-3",
+          "door_object": "GEORGE-DOOR"
+        },
+        "east": {
+          "type": "door",
+          "destination": "GEORGE-BATH",
+          "door_object": "GEORGE-BATH-DOOR"
+        }
+      },
+      "global_objects": ["GEORGE-DOOR", "GEORGE-BATH-DOOR", "END-TABLE", "CHAIR", "BED"],
+      "navigation": {
+        "line": 0,
+        "station": "CORRIDOR-3",
+        "corridor": 0
+      }
+    }
+  }
+}
