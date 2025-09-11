@@ -114,6 +114,7 @@ class Object(baseobj) :
                 )
                 
                 objects[obj_id] = obj
+                logger.info(f"Created id [{obj.id}]  object: {obj_id} ")
             
             logger.info(f"Loaded {len(objects)} objects from {objects_path}")
             return True
@@ -121,8 +122,6 @@ class Object(baseobj) :
         except Exception as e:
             logger.error(f"Error loading objects: {e}")
             return False
-
-
 
 
 class ExitType(Enum):
@@ -248,6 +247,7 @@ class Room(baseobj):
                 )
                 
                 rooms[room_id] = room
+                logger.info(f"Created id [{room.id}]  room: {room_id} ")
             
             logger.info(f"Loaded {len(rooms)} rooms from {rooms_path}")
             return True
@@ -258,7 +258,7 @@ class Room(baseobj):
 
 
 #game = game
-action_registry: Dict[str, Callable] = {}
+function_registry: Dict[str, Callable] = {}
 loaded_modules: Dict[str, Any] = {}
 objects: Dict[str, Object] = {}
 rooms: Dict[str, Room] = {}
@@ -358,8 +358,8 @@ def _register_action_handlers(module: Any) -> None:
         for name, obj in inspect.getmembers(module):
             # Look for functions ending with _F
             if callable(obj):
-                action_registry[name] = obj           
-                logger.debug(f"Registered action handler: {name}")
+                function_registry[name] = obj           
+                logger.info(f"Registered action handler: {name}")
                 
     except Exception as e:
         logger.error(f"Error registering action handlers: {e}")
@@ -370,27 +370,6 @@ def _register_action_handlers(module: Any) -> None:
 
 
 if __name__ == "__main__":
-    # # Example usage
-    # obj = Object(
-    #     name="Key",
-    #     description="A small rusty key.",
-    #     flags={ObjectFlag.TAKEABLE},
-    #     synonyms=["key", "rusty key"],
-    #     adjectives=["small", "rusty"],
-    #     initial_description="It's a small rusty key, probably opens something old.",
-    # )
-    
-    # room = Room(
-    #     name="Dungeon Entrance",
-    #     description="You are at the entrance of a dark dungeon.",
-    #     flags={ObjectFlag.ONBIT | ObjectFlag.RLANDBIT},
-    #     exits={"north": "dungeon_hall"},
-    #     global_objects=["torch"],
-    # )
-    
-    # print(f"Created object: {obj.name}, Description: {obj.description}")
-    # print(f"Created room: {room.name}, Exits: {room.exits}")
-
     fp = Path("./core")
     load_game_module(fp)
 
