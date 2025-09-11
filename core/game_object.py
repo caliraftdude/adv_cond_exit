@@ -58,6 +58,14 @@ class baseobj:
     # Action handler - equivalent to ZIL's ACTION property
     action_handler: Optional[Callable] = None               # Name of action routine
 
+    @staticmethod
+    def _parse_flags(flag_list):
+        if not flag_list:
+            return ObjectFlag.NONE
+        
+        flags = [ObjectFlag[flag] for flag in flag_list if flag in ObjectFlag.__members__]
+        return reduce(operator.or_, flags) if flags else ObjectFlag.NONE
+    
 
 @dataclass
 class Object(baseobj) :
@@ -77,6 +85,44 @@ class Object(baseobj) :
     # State tracking
     _original_location: Optional['Object'] = None
     _state_variables: Dict[str, Any] = field(default_factory=dict)
+
+    @staticmethod
+    def _load_objects(objects_path: Path) -> bool:
+        """Load object data"""
+
+        try:
+            if not objects_path.exists():
+                logger.debug(f"Objects file not found: {objects_path}")
+                return False
+            
+            with open(objects_path, 'r') as f:
+                data = json.load(f)
+            
+            # Create Object instances
+            for obj_id, obj_data in data.items():
+                obj = Object(
+                    name=obj_id,
+                    description=obj_data.get("description", ""),
+                    flags=Object._parse_flags(obj_data.get("flags", [])),
+                    synonyms=obj_data.get("synonyms", []),
+                    adjectives=obj_data.get("adjectives", []),            
+                    location=obj_data.get("location"),
+                    action_handler=obj_data.get("action"),
+                    
+                    properties=obj_data.get("properties", {}),
+                    contents=obj_data.get("contents", [])
+                )
+                
+                objects[obj_id] = obj
+            
+            logger.info(f"Loaded {len(objects)} objects from {objects_path}")
+            return True
+        
+        except Exception as e:
+            logger.error(f"Error loading objects: {e}")
+            return False
+
+
 
 
 class ExitType(Enum):
@@ -139,6 +185,76 @@ class Room(baseobj):
     global_objects: List[str] = field(default_factory=list)              # Objects always present
     navigation: Naviagation = field(default_factory=Naviagation)               # Navigation aids
 
+    @staticmethod
+    def parse_exits(exits_data: Dict[str, Any]) -> Dict[str, Exit]:
+        """Parse exits from JSON data into Exit objects"""
+        exits = {}
+
+        for direction, exit_info in exits_data.items():
+            if isinstance(exit_info, str):
+                # Normal exit
+                exits[direction] = Normal_Exit(name=direction, dest=exit_info)
+
+            elif isinstance(exit_info, dict):
+                exit_type = exit_info.get("type")
+
+                if exit_type == "door":
+                    exits[direction] = Door_Exit(
+                        name=direction,
+                        dest=exit_info.get("dest", ""),
+                        door_obj=exit_info.get("door_obj", "")
+                    )
+                elif exit_type == "non_exit":
+                    exits[direction] = Non_Exit(
+                        name=direction,
+                        message=exit_info.get("message", "You can't go that way.")
+                    )
+                elif exit_type == "conditional":
+                    exits[direction] = Conditional_Exit(
+                        name=direction,
+                        dest=exit_info.get("dest", ""),
+                        cond_var=exit_info.get("cond_var", ""),
+                        message=exit_info.get("message", "You can't go that way.")
+                    )
+        return exits
+
+    @staticmethod
+    def _load_rooms(rooms_path: Path) -> bool:
+        """Load room data"""
+        try:
+            if not rooms_path.exists():
+                logger.debug(f"Rooms file not found: {rooms_path}")
+                return False
+            
+            with open(rooms_path, 'r') as f:
+                data = json.load(f)
+            
+            # Create Room objects
+            for room_id, room_data in data.items():
+                room = Room(
+                    name=room_id,
+                    description=room_data.get("description", ""),
+                    flags=Room._parse_flags(room_data.get("flags", [])),
+                    synonyms=room_data.get("synonyms", []),
+                    adjectives=room_data.get("adjectives", []),   
+                    action_handler=room_data.get("action"),
+
+                    exits=Room.parse_exits(room_data.get("exits", {}) ),
+                    global_objects=room_data.get("global_objects", []),
+                    navigation=Naviagation(line=room_data.get("navigation", {}).get("line"),
+                                        station=room_data.get("navigation", {}).get("station"), 
+                                        corridor=room_data.get("navigation", {}).get("corridor")),
+
+                )
+                
+                rooms[room_id] = room
+            
+            logger.info(f"Loaded {len(rooms)} rooms from {rooms_path}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error loading rooms: {e}")
+            return False
 
 
 #game = game
@@ -166,12 +282,12 @@ def load_game_module(module_path: Union[str, Path]) -> bool:
             success = False
 
         # 2. Load the objects (this includes doors)
-        if not _load_objects(module_path / "objects.json"):
+        if not Object._load_objects(module_path / "objects.json"):
             logger.error("Failed to load objects")
             success = False
 
         # 3. Load the room objects
-        if not _load_rooms(module_path / "rooms.json"):
+        if not Room._load_rooms(module_path / "rooms.json"):
             logger.error("Failed to load rooms")
             success = False
 
@@ -248,117 +364,8 @@ def _register_action_handlers(module: Any) -> None:
     except Exception as e:
         logger.error(f"Error registering action handlers: {e}")
 
-def parse_flags(flag_list):
-    if not flag_list:
-        return ObjectFlag.NONE
-    
-    flags = [ObjectFlag[flag] for flag in flag_list if flag in ObjectFlag.__members__]
-    return reduce(operator.or_, flags) if flags else ObjectFlag.NONE
 
-def _load_objects(objects_path: Path) -> bool:
-    """Load object data"""
 
-    try:
-        if not objects_path.exists():
-            logger.debug(f"Objects file not found: {objects_path}")
-            return False
-        
-        with open(objects_path, 'r') as f:
-            data = json.load(f)
-        
-        # Create Object instances
-        for obj_id, obj_data in data.items():
-            obj = Object(
-                name=obj_id,
-                description=obj_data.get("description", ""),
-                flags=parse_flags(obj_data.get("flags", [])),
-                synonyms=obj_data.get("synonyms", []),
-                adjectives=obj_data.get("adjectives", []),            
-                location=obj_data.get("location"),
-                action_handler=obj_data.get("action"),
-                
-                properties=obj_data.get("properties", {}),
-                contents=obj_data.get("contents", [])
-            )
-            
-            objects[obj_id] = obj
-        
-        logger.info(f"Loaded {len(objects)} objects from {objects_path}")
-        return True
-        
-    except Exception as e:
-        logger.error(f"Error loading objects: {e}")
-        return False
-
-def parse_exits(exits_data: Dict[str, Any]) -> Dict[str, Exit]:
-    """Parse exits from JSON data into Exit objects"""
-    exits = {}
-
-    for direction, exit_info in exits_data.items():
-        if isinstance(exit_info, str):
-            # Normal exit
-            exits[direction] = Normal_Exit(name=direction, dest=exit_info)
-
-        elif isinstance(exit_info, dict):
-            exit_type = exit_info.get("type")
-
-            if exit_type == "door":
-                exits[direction] = Door_Exit(
-                    name=direction,
-                    dest=exit_info.get("dest", ""),
-                    door_obj=exit_info.get("door_obj", "")
-                )
-            elif exit_type == "non_exit":
-                exits[direction] = Non_Exit(
-                    name=direction,
-                    message=exit_info.get("message", "You can't go that way.")
-                )
-            elif exit_type == "conditional":
-                exits[direction] = Conditional_Exit(
-                    name=direction,
-                    dest=exit_info.get("dest", ""),
-                    cond_var=exit_info.get("cond_var", ""),
-                    message=exit_info.get("message", "You can't go that way.")
-                )
-    return exits
-
-def _load_rooms(rooms_path: Path) -> bool:
-    """Load room data"""
-    try:
-        if not rooms_path.exists():
-            logger.debug(f"Rooms file not found: {rooms_path}")
-            return False
-        
-        with open(rooms_path, 'r') as f:
-            data = json.load(f)
-        
-        # Create Room objects
-        for room_id, room_data in data.items():
-            room = Room(
-                name=room_id,
-                description=room_data.get("description", ""),
-                flags=parse_flags(room_data.get("flags", [])),
-                synonyms=room_data.get("synonyms", []),
-                adjectives=room_data.get("adjectives", []),   
-                action_handler=room_data.get("action"),
-
-                exits=parse_exits(room_data.get("exits", {}) ),
-                global_objects=room_data.get("global_objects", []),
-                navigation=Naviagation(line=room_data.get("navigation", {}).get("line"),
-                                       station=room_data.get("navigation", {}).get("station"), 
-                                       corridor=room_data.get("navigation", {}).get("corridor")),
-
-            )
-
-            
-            rooms[room_id] = room
-        
-        logger.info(f"Loaded {len(rooms)} rooms from {rooms_path}")
-        return True
-        
-    except Exception as e:
-        logger.error(f"Error loading rooms: {e}")
-        return False
 
 
 
