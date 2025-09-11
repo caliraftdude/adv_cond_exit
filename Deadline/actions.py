@@ -1050,11 +1050,6 @@ def PLAYER_F(game):
     pass  # Empty function
 
 
-
-
-
-
-
 def SHOW_HOLE(game):
     """Show hole location routine"""
     game.TELL(

@@ -1,0 +1,19 @@
+{
+  "BAY-WINDOW": {
+    "description": "bay window",
+    "synonyms": ["window"],
+    "adjectives": ["bay"],
+    "flags": ["DOORBIT", "CONTBIT"],
+    "location": "LOCAL-GLOBALS",
+    "action": "BAY-WINDOW-F"
+  },
+
+  "ROSE:": {
+    "location": "LOCAL-GLOBALS",
+    "description": "roses",
+    "synonyms": ["bed", "roses", "rose"],
+    "adjectives": ["red", "white", "pink", "yellow"],
+    "action": "ROSE-F"
+  }
+
+}
