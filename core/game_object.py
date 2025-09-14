@@ -35,10 +35,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def _getObjectID() -> int:
-        """Get a unique object ID"""
-        BaseObj._classid += 1
-        return BaseObj._classid
 
 @dataclass
 class BaseObj:
@@ -47,9 +43,9 @@ class BaseObj:
     """
     _classid: ClassVar[int] = 0  # Class variable to assign unique IDs
 
-    id: int = field(default_factory=_getObjectID)           # Unique identifier
-    name: str  = str()                                      # Short name (DESC in ZIL)
-    description: str = str()                                # Long description (LDESC)
+    id: int = field(default_factory=lambda: BaseObj._getObjectID())     # Unique identifier
+    name: str  = str()                                                  # Short name (DESC in ZIL)
+    description: str = str()                                            # Long description (LDESC)
     flags: ObjectFlag = ObjectFlag.NONE
     
     # Vocabulary - for parser matching
@@ -58,6 +54,12 @@ class BaseObj:
 
     # Action handler - equivalent to ZIL's ACTION property
     action_handler: Optional[Callable] = None               # Name of action routine
+
+    @staticmethod
+    def _getObjectID() -> int:
+            """Get a unique object ID"""
+            BaseObj._classid += 1
+            return BaseObj._classid
 
     @staticmethod
     def _parse_flags(flag_list):
@@ -87,6 +89,29 @@ class Object(BaseObj) :
     _original_location: Optional['Object'] = None
     _state_variables: Dict[str, Any] = field(default_factory=dict)
 
+    @classmethod
+    def from_json(cls, obj_id: str, obj_data: Dict[str, Any]) -> 'Object':
+        # Load object from JSON file
+        try:
+            # Create Object instance
+            obj = cls(
+                name=obj_id,
+                description=obj_data.get("description", ""),
+                flags=Object._parse_flags(obj_data.get("flags", [])),
+                synonyms=obj_data.get("synonyms", []),
+                adjectives=obj_data.get("adjectives", []),            
+                location=obj_data.get("location"),
+                action_handler=obj_data.get("action"),
+                
+                properties=obj_data.get("properties", {}),
+                contents=obj_data.get("contents", [])
+            )
+            return obj
+        
+        except Exception as e:
+            logger.error(f"Failed to load object {obj_id} with {obj_data}: {e}")
+            raise ResourceLoadError(f"Cannot load object: {e}")
+
     @staticmethod
     def _load_objects(objects_path: Path) -> bool:
         """Load object data"""
@@ -103,22 +128,12 @@ class Object(BaseObj) :
             objcount = len(objects)
 
             # Create Object instances
-            for obj_id, obj_data in data.items():
-                obj = Object(
-                    name=obj_id,
-                    description=obj_data.get("description", ""),
-                    flags=Object._parse_flags(obj_data.get("flags", [])),
-                    synonyms=obj_data.get("synonyms", []),
-                    adjectives=obj_data.get("adjectives", []),            
-                    location=obj_data.get("location"),
-                    action_handler=obj_data.get("action"),
-                    
-                    properties=obj_data.get("properties", {}),
-                    contents=obj_data.get("contents", [])
-                )
-                
-                objects[obj_id] = obj
-                logger.info(f"Created id [{obj.id}]  object: {obj_id} ")
+            for obj_name, obj_data in data.items():
+                new_object = Object.from_json(obj_name, obj_data)
+
+                objects[obj_name] = new_object
+                logger.info(f"Created id [{new_object.id}]  object: {obj_name} ")
+
             
             logger.info(f"Loaded {len(objects)-objcount} objects from {objects_path}")
             return True
@@ -126,6 +141,10 @@ class Object(BaseObj) :
         except Exception as e:
             logger.error(f"Error loading objects: {e}")
             return False
+
+
+
+
 
 
 class ExitType(Enum):
@@ -188,6 +207,34 @@ class Room(BaseObj):
     global_objects: List[str] = field(default_factory=list)              # Objects always present
     navigation: Naviagation = field(default_factory=Naviagation)               # Navigation aids
 
+    @classmethod
+    def from_json(cls, room_name: str, room_data: Dict[str, Any]) -> 'Room':
+        # Load Room from JSON file
+        try:
+            room = cls(
+                name=room_name,
+                description=room_data.get("description", ""),
+                flags=Room._parse_flags(room_data.get("flags", [])),
+                synonyms=room_data.get("synonyms", []),
+                adjectives=room_data.get("adjectives", []),   
+                action_handler=room_data.get("action"),
+
+                exits=Room.parse_exits(room_data.get("exits", {}) ),
+                global_objects=room_data.get("global_objects", []),
+                navigation=Naviagation(line=room_data.get("navigation", {}).get("line"),
+                                    station=room_data.get("navigation", {}).get("station"), 
+                                    corridor=room_data.get("navigation", {}).get("corridor")),
+
+            )
+
+            return room
+
+        
+        except Exception as e:
+            logger.error(f"Failed to load room {room_name} with {room_data}: {e}")
+            raise ResourceLoadError(f"Cannot load room: {e}")
+
+
     @staticmethod
     def parse_exits(exits_data: Dict[str, Any]) -> Dict[str, Exit]:
         """Parse exits from JSON data into Exit objects"""
@@ -236,25 +283,11 @@ class Room(BaseObj):
             objcount = len(rooms)
 
             # Create Room objects
-            for room_id, room_data in data.items():
-                room = Room(
-                    name=room_id,
-                    description=room_data.get("description", ""),
-                    flags=Room._parse_flags(room_data.get("flags", [])),
-                    synonyms=room_data.get("synonyms", []),
-                    adjectives=room_data.get("adjectives", []),   
-                    action_handler=room_data.get("action"),
+            for room_name, room_data in data.items():
+                new_room = Room.from_json(room_name, room_data)
 
-                    exits=Room.parse_exits(room_data.get("exits", {}) ),
-                    global_objects=room_data.get("global_objects", []),
-                    navigation=Naviagation(line=room_data.get("navigation", {}).get("line"),
-                                        station=room_data.get("navigation", {}).get("station"), 
-                                        corridor=room_data.get("navigation", {}).get("corridor")),
-
-                )
-                
-                rooms[room_id] = room
-                logger.info(f"Created id [{room.id}]  room: {room_id} ")
+                rooms[room_name] = new_room
+                logger.info(f"Created id [{new_room.id}]  room: {room_name} ")
             
             logger.info(f"Loaded {len(rooms)-objcount} rooms from {rooms_path}")
             return True
@@ -262,6 +295,8 @@ class Room(BaseObj):
         except Exception as e:
             logger.error(f"Error loading rooms: {e}")
             return False
+
+
 
 
 @dataclass
