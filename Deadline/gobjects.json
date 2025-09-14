@@ -1,0 +1,478 @@
+{
+  "GLOBAL-MURDER": {
+    "description": "murder",
+    "synonyms": ["murder", "killing", "crime"],
+    "location": "GLOBAL-OBJECTS",
+    "action": "GLOBAL-MURDER-F"
+  },
+  
+  "GLOBAL-SUICIDE": {
+    "description": "suicide",
+    "synonyms": ["suicide"],
+    "location": "GLOBAL-OBJECTS",
+    "action": "GLOBAL-MURDER-F"
+  },
+  
+  "GLOBAL-OMNIDYNE": {
+    "description": "Omnidyne Corporation",
+    "synonyms": ["omnidyne"],
+    "location": "GLOBAL-OBJECTS"
+  },
+  
+  "GLOBAL-ROSES": {
+    "description": "roses",
+    "synonyms": ["roses", "garden", "rose"],
+    "adjectives": ["rose"],
+    "location": "GLOBAL-OBJECTS"
+  },
+  
+  "GLOBAL-WEATHER": {
+    "description": "weather",
+    "synonyms": ["weather", "climate", "wrong", "problem"],
+    "location": "GLOBAL-OBJECTS"
+  },
+  
+  "GLOBAL-LIGHT": {
+    "description": "light",
+    "synonyms": ["light", "sunlight"],
+    "location": "GLOBAL-OBJECTS"
+  },
+  
+  "GLOBAL-OLD-WILL": {
+    "description": "present will",
+    "synonyms": ["will"],
+    "adjectives": ["current", "present", "old"],
+    "location": "GLOBAL-OBJECTS"
+  },
+  
+  "GLOBAL-NEW-WILL": {
+    "description": "new will",
+    "synonyms": ["will"],
+    "adjectives": ["new"],
+    "location": "GLOBAL-OBJECTS"
+  },
+  
+  "FOYER-TABLE": {
+    "description": "marble-top table",
+    "synonyms": ["table"],
+    "adjectives": ["marble"],
+    "location": "FOYER",
+    "flags": ["NDESCBIT", "OPENBIT", "CONTBIT", "SURFACEBIT"],
+    "capacity": 40
+  },
+  
+  "TELEPHONE": {
+    "description": "telephone",
+    "synonyms": ["telephone", "phone", "receiver"],
+    "location": "LOCAL-GLOBALS",
+    "action": "TELEPHONE-F"
+  },
+  
+  "GLOBAL-FOCUS": {
+    "description": "Focus",
+    "synonyms": ["focus", "scandal", "case"],
+    "adjectives": ["focus"],
+    "location": "GLOBAL-OBJECTS"
+  },
+  
+  "GLOBAL-MR-ROBNER": {
+    "description": "Mr. Robner",
+    "synonyms": ["robner", "father", "marshall"],
+    "adjectives": ["mr", "mister"],
+    "location": "GLOBAL-OBJECTS",
+    "flags": ["PERSON"],
+    "action": "GLOBAL-MR-ROBNER-F"
+  },
+  
+  "BOOKSHELVES": {
+    "description": "set of bookshelves",
+    "synonyms": ["bookshelves", "shelves", "book", "books"],
+    "adjectives": ["book"],
+    "location": "LIBRARY",
+    "flags": ["NDESCBIT"],
+    "action": "BOOKSHELVES-F"
+  },
+  
+  "LIBRARY-BUTTON": {
+    "description": "black button",
+    "synonyms": ["button"],
+    "adjectives": ["black"],
+    "location": "LIBRARY",
+    "flags": ["NDESCBIT", "INVISIBLE"],
+    "action": "LIBRARY-BUTTON-F"
+  },
+  
+  "RED-BUTTON": {
+    "description": "red button",
+    "synonyms": ["button"],
+    "adjectives": ["red"],
+    "location": "HIDDEN-CLOSET",
+    "flags": ["NDESCBIT"],
+    "action": "RED-BUTTON-F"
+  },
+  
+  "BLUE-BUTTON": {
+    "description": "blue button",
+    "synonyms": ["button"],
+    "adjectives": ["blue"],
+    "location": "HIDDEN-CLOSET",
+    "flags": ["NDESCBIT"],
+    "action": "BLUE-BUTTON-F"
+  },
+  
+  "LADDER": {
+    "description": "wooden ladder",
+    "synonyms": ["ladder"],
+    "adjectives": ["wooden"],
+    "location": "SHED-ROOM",
+    "fdesc": "Leaning in a corner is a wooden ladder.",
+    "flags": ["TAKEBIT", "CLIMBBIT"],
+    "size": 50,
+    "action": "LADDER-F"
+  },
+  
+  "GLOBAL-LADDER": {
+    "description": "ladder",
+    "synonyms": ["ladder"],
+    "adjectives": ["wooden"],
+    "location": "GLOBAL-OBJECTS",
+    "flags": ["NDESCBIT"],
+    "action": "GLOBAL-LADDER-F"
+  },
+  
+  "TOOLS-1": {
+    "description": "collection of carpentry tools",
+    "synonyms": ["tools", "saw", "hammer", "rope"],
+    "location": "SHED-ROOM",
+    "flags": ["NDESCBIT"],
+    "action": "TOOLS-F"
+  },
+  
+  "TOOLS-2": {
+    "description": "collection of garden tools",
+    "synonyms": ["spade", "hoe", "rake", "hose"],
+    "location": "SHED-ROOM",
+    "flags": ["NDESCBIT", "DUPLICATE"],
+    "action": "TOOLS-F"
+  },
+  
+  "S-SHELVES": {
+    "description": "shelf",
+    "synonyms": ["shelves"],
+    "location": "SHED-ROOM",
+    "flags": ["NDESCBIT", "OPENBIT", "CONTBIT", "SURFACEBIT"],
+    "capacity": 20,
+    "action": "S-SHELVES-F"
+  },
+  
+  "CUPS": {
+    "description": "group of cups",
+    "synonyms": ["group", "cups", "teacup"],
+    "adjectives": ["cups", "antique", "tea"],
+    "location": "KITCHEN",
+    "flags": ["NDESCBIT"],
+    "action": "CUPS-F"
+  },
+  
+  "SAUCERS": {
+    "description": "group of saucers",
+    "synonyms": ["group", "saucer"],
+    "adjectives": ["saucer", "antique"],
+    "location": "KITCHEN",
+    "flags": ["NDESCBIT"],
+    "action": "SAUCERS-F"
+  },
+  
+  "CHINA": {
+    "description": "china",
+    "synonyms": ["china"],
+    "location": "KITCHEN",
+    "flags": ["NDESCBIT"],
+    "action": "CHINA-F"
+  },
+  
+  "PLATES": {
+    "description": "plates",
+    "synonyms": ["plate", "plates"],
+    "location": "KITCHEN",
+    "flags": ["NDESCBIT"],
+    "action": "PLATES-F"
+  },
+  
+  "CUP": {
+    "description": "cup",
+    "synonyms": ["cup", "teacup"],
+    "adjectives": ["tea", "beautiful"],
+    "location": "LIBRARY",
+    "fdesc": "Turned onto its side, lying on the floor, is a beautiful teacup.",
+    "flags": ["TAKEBIT"],
+    "size": 4,
+    "action": "CUP-F"
+  },
+  
+  "SAUCER": {
+    "description": "saucer",
+    "synonyms": ["saucer"],
+    "adjectives": ["beautiful"],
+    "location": "LIBRARY",
+    "fdesc": "Lying on the floor, overturned, is a beautiful saucer.",
+    "flags": ["TAKEBIT"],
+    "size": 4,
+    "action": "SAUCER-F"
+  },
+  
+  "TRASH-BASKET": {
+    "description": "wastepaper basket",
+    "synonyms": ["basket"],
+    "adjectives": ["wastep", "wicker", "trash"],
+    "location": "LIBRARY",
+    "fdesc": "Alongside the desk is a wicker wastepaper basket.",
+    "flags": ["TAKEBIT", "OPENBIT", "CONTBIT"],
+    "capacity": 15,
+    "size": 10
+  },
+  
+  "TRASH": {
+    "description": "bunch of crumpled papers",
+    "synonyms": ["trash", "papers"],
+    "adjectives": ["crumpled"],
+    "location": "TRASH-BASKET",
+    "ldesc": "Inside the wastepaper basket are some crumpled papers.",
+    "flags": ["TAKEBIT", "READBIT"],
+    "text": "There are three wads of paper. One is a shopping list. Another is a list of current stock prices. The last is the start of a letter to the Board of Directors of the Robner Corp.  Unfortunately, it does not contain enough information to allow even a guess about the intent of the letter.",
+    "action": "TRASH-F"
+  },
+  
+  "GLOBAL-FINGERPRINTS": {
+    "description": "fingerprints",
+    "synonyms": ["fingerprint"],
+    "location": "GLOBAL-OBJECTS",
+    "action": "GLOBAL-FINGERPRINTS-F"
+  },
+  
+  "LIBRARY-CARPET": {
+    "description": "carpet",
+    "synonyms": ["carpet", "rug"],
+    "location": "LIBRARY",
+    "flags": ["NDESCBIT"],
+    "action": "LIBRARY-CARPET-F"
+  },
+  
+  "LIBRARY-DOOR": {
+    "description": "oak door",
+    "synonyms": ["door"],
+    "adjectives": ["oak", "broken"],
+    "location": "LOCAL-GLOBALS",
+    "flags": ["NDESCBIT"],
+    "text": "The door is a magnificent solid oak piece. Its metal bolt is bent and the metal piece in which it rested has been sheared off the door frame.  It seems clear that the door was securely locked from the inside when it was broken down."
+  },
+  
+  "MUD-SPOT": {
+    "description": "mud spots",
+    "synonyms": ["spot", "mark", "dirt", "mud"],
+    "adjectives": ["dried"],
+    "location": "LIBRARY",
+    "flags": ["NDESCBIT", "INVISIBLE"],
+    "text": "The spots, which seem to be dried dirt or mud, are in the area between the balcony and the desk."
+  },
+  
+  "SINK": {
+    "description": "sink",
+    "synonyms": ["sink", "sinks", "bowl", "basin"],
+    "location": "LOCAL-GLOBALS",
+    "flags": ["NDESCBIT", "FURNITURE"],
+    "action": "SINK-F"
+  },
+  
+  "TOILET": {
+    "description": "toilet",
+    "synonyms": ["toilet"],
+    "location": "LOCAL-GLOBALS",
+    "flags": ["NDESCBIT", "FURNITURE", "SURFACEBIT", "VEHBIT"],
+    "action": "TOILET-F"
+  },
+  
+  "SHOWER": {
+    "description": "shower",
+    "synonyms": ["shower", "tub", "bath", "bathtub"],
+    "adjectives": ["shower", "bath"],
+    "location": "LOCAL-GLOBALS",
+    "flags": ["NDESCBIT", "TRYTAKEBIT", "FURNITURE"],
+    "action": "SHOWER-F"
+  },
+  
+  "DUNBAR-CABINET": {
+    "description": "cabinet",
+    "synonyms": ["cabinet", "chest"],
+    "adjectives": ["medicine"],
+    "location": "DUNBAR-BATH",
+    "flags": ["NDESCBIT", "CONTBIT", "SEARCHBIT"],
+    "capacity": 50
+  },
+  
+  "BATHTUB": {
+    "description": "bathtub",
+    "synonyms": ["tub", "bathtub"],
+    "adjectives": ["bath"],
+    "location": "MASTER-BATH",
+    "flags": ["NDESCBIT", "VEHBIT", "OPENBIT", "CONTBIT", "FURNITURE"],
+    "capacity": 50
+  },
+  
+  "MASTER-BATH-COUNTER": {
+    "description": "counter",
+    "synonyms": ["counter"],
+    "adjectives": ["long"],
+    "location": "MASTER-BATH",
+    "flags": ["NDESCBIT", "FURNITURE", "SURFACEBIT", "CONTBIT", "OPENBIT"],
+    "capacity": 50
+  },
+  
+  "CHAIR": {
+    "description": "chair",
+    "synonyms": ["chair", "chairs"],
+    "location": "LOCAL-GLOBALS",
+    "flags": ["NDESCBIT", "FURNITURE"]
+  },
+  
+  "SOFA": {
+    "description": "sofa",
+    "synonyms": ["couch", "sofa", "couches"],
+    "location": "LOCAL-GLOBALS",
+    "flags": ["NDESCBIT", "SURFACEBIT", "CONTBIT", "OPENBIT", "VEHBIT", "FURNITURE"]
+  },
+  
+  "LGTABLE": {
+    "description": "table",
+    "synonyms": ["table", "tables"],
+    "location": "LOCAL-GLOBALS",
+    "flags": ["NDESCBIT", "FURNITURE"]
+  },
+  
+  "END-TABLE": {
+    "description": "pair of end tables",
+    "synonyms": ["table", "tables"],
+    "adjectives": ["end"],
+    "location": "LOCAL-GLOBALS",
+    "flags": ["NDESCBIT", "FURNITURE"]
+  },
+  
+  "LIVING-ROOM-TABLE": {
+    "description": "living room table",
+    "synonyms": ["table", "tables"],
+    "adjectives": ["living", "room"],
+    "location": "LIVING-ROOM",
+    "flags": ["NDESCBIT", "SURFACEBIT", "CONTBIT", "OPENBIT", "FURNITURE"],
+    "capacity": 40
+  },
+  
+  "BED": {
+    "description": "bed",
+    "synonyms": ["bed"],
+    "location": "LOCAL-GLOBALS",
+    "flags": ["NDESCBIT", "SURFACEBIT", "CONTBIT", "OPENBIT", "FURNITURE", "VEHBIT"],
+    "capacity": 30,
+    "action": "BED-F"
+  },
+  
+  "WINDOW": {
+    "description": "window",
+    "synonyms": ["window"],
+    "location": "LOCAL-GLOBALS",
+    "flags": ["NDESCBIT"],
+    "action": "WINDOW-F"
+  },
+  
+  "KITCHEN-WINDOW": {
+    "description": "kitchen window",
+    "synonyms": ["window"],
+    "adjectives": ["kitchen"],
+    "location": "LOCAL-GLOBALS",
+    "flags": ["NDESCBIT"],
+    "action": "KITCHEN-WINDOW-F"
+  },
+  
+  "DINING-ROOM-WINDOW": {
+    "description": "dining room window",
+    "synonyms": ["window"],
+    "adjectives": ["dining", "room"],
+    "location": "LOCAL-GLOBALS",
+    "flags": ["NDESCBIT"],
+    "action": "DINING-ROOM-WINDOW-F"
+  },
+  
+  "MASTER-BEDROOM-DRESSER": {
+    "description": "dresser",
+    "synonyms": ["dresser"],
+    "location": "MASTER-BEDROOM",
+    "flags": ["NDESCBIT", "CONTBIT"],
+    "capacity": 30,
+    "action": "MASTER-BEDROOM-DRESSER-F"
+  },
+  
+  "GLOBAL-HOLE": {
+    "description": "holes",
+    "synonyms": ["hole", "holes"],
+    "location": "GLOBAL-OBJECTS",
+    "flags": ["NDESCBIT"],
+    "action": "HOLE-F"
+  },
+  
+  "HOLE": {
+    "description": "holes",
+    "synonyms": ["hole", "holes"],
+    "adjectives": ["deep"],
+    "location": "IN-ROSES",
+    "flags": ["NDESCBIT", "INVISIBLE"],
+    "action": "HOLE-F"
+  },
+  
+  "FRAGMENT": {
+    "description": "fragment",
+    "synonyms": ["piece", "porcelain", "fragment", "shard"],
+    "location": "IN-ROSES",
+    "flags": ["INVISIBLE", "TAKEBIT"],
+    "action": "FRAGMENT-F"
+  },
+  
+  "SUGAR-BOWL": {
+    "description": "sugar bowl",
+    "synonyms": ["bowl", "sugar", "substance", "powder"],
+    "adjectives": ["sugar", "white", "powder"],
+    "location": "TRAY",
+    "fdesc": "Sitting on the tray is a bowl containing a white powdery substance.",
+    "flags": ["TAKEBIT"],
+    "action": "SUGAR-BOWL-F"
+  },
+  
+  "TRAY": {
+    "description": "tray",
+    "synonyms": ["tray"],
+    "adjectives": ["large", "collapsible"],
+    "location": "LIBRARY",
+    "fdesc": "Beside the desk is a large collapsible tray.",
+    "flags": ["TAKEBIT", "CONTBIT", "OPENBIT", "SURFACEBIT"],
+    "capacity": 40,
+    "size": 40
+  },
+  
+  "SAFE": {
+    "description": "safe",
+    "synonyms": ["combination", "safe", "door"],
+    "adjectives": ["safe", "wall", "large"],
+    "location": "HIDDEN-CLOSET",
+    "flags": ["NDESCBIT", "CONTBIT"],
+    "capacity": 15,
+    "action": "SAFE-F"
+  },
+  
+  "CORNERSTONE": {
+    "description": "cornerstone",
+    "synonyms": ["cornerstone", "stone"],
+    "adjectives": ["carved", "ornate"],
+    "location": "EAST-OF-DOOR",
+    "ldesc": "The ornately carved cornerstone of the house is nearby.",
+    "flags": ["READBIT"],
+    "text": "|\n   DEADLINE: An INTERLOGIC Mystery|\n          By Infocom, Inc.|\n     Marc Blank, Chief Architect|\n   Copyright 1982 by Infocom, Inc.|\n        All rights reserved.|\nDEADLINE and INTERLOGIC are trademarks of Infocom, Inc.|\n"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "XXX": {
+    "description": "X",
+    "fdesc": "FROB",
+    "location": "ROOMS",
+    "size": 10,
+    "capacity": 10
+  }
+}

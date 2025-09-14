@@ -22,6 +22,7 @@ from functools import reduce
 import operator
 
 from flags import ObjectFlag
+from exceptions import ResourceLoadError
 
 #if TYPE_CHECKING:
     #from .property_system import PropertyManager
@@ -36,11 +37,11 @@ logger = logging.getLogger(__name__)
 
 def _getObjectID() -> int:
         """Get a unique object ID"""
-        baseobj._classid += 1
-        return baseobj._classid
+        BaseObj._classid += 1
+        return BaseObj._classid
 
 @dataclass
-class baseobj:
+class BaseObj:
     """
     Base object class for all objects and elements within the game.
     """
@@ -68,7 +69,7 @@ class baseobj:
     
 
 @dataclass
-class Object(baseobj) :
+class Object(BaseObj) :
     """
     Game Object class for all game objects.  Equivalent to ZIL OBJECT definition
     """
@@ -98,6 +99,9 @@ class Object(baseobj) :
             with open(objects_path, 'r') as f:
                 data = json.load(f)
             
+            # Other ways to do this - but this is fine
+            objcount = len(objects)
+
             # Create Object instances
             for obj_id, obj_data in data.items():
                 obj = Object(
@@ -116,7 +120,7 @@ class Object(baseobj) :
                 objects[obj_id] = obj
                 logger.info(f"Created id [{obj.id}]  object: {obj_id} ")
             
-            logger.info(f"Loaded {len(objects)} objects from {objects_path}")
+            logger.info(f"Loaded {len(objects)-objcount} objects from {objects_path}")
             return True
         
         except Exception as e:
@@ -176,7 +180,7 @@ class Naviagation:
 
 
 @dataclass
-class Room(baseobj):
+class Room(BaseObj):
     """
     Room class - represents locations in the game.  Equivalent to ZIL rooms with special properties
     """
@@ -228,6 +232,9 @@ class Room(baseobj):
             with open(rooms_path, 'r') as f:
                 data = json.load(f)
             
+            # Other ways to do this - but this is fine
+            objcount = len(rooms)
+
             # Create Room objects
             for room_id, room_data in data.items():
                 room = Room(
@@ -249,7 +256,7 @@ class Room(baseobj):
                 rooms[room_id] = room
                 logger.info(f"Created id [{room.id}]  room: {room_id} ")
             
-            logger.info(f"Loaded {len(rooms)} rooms from {rooms_path}")
+            logger.info(f"Loaded {len(rooms)-objcount} rooms from {rooms_path}")
             return True
             
         except Exception as e:
@@ -257,7 +264,52 @@ class Room(baseobj):
             return False
 
 
+@dataclass
+class Manifest:
+    """
+    Describes all resources to be loaded for a game module.
+    This is typically loaded from game.json
+    """
+    game_name: str
+    version: str
+    description: str = ""
+    author: str = ""
+    difficulty: str = ""
+
+    # Resource files
+    object_files: List[str] = field(default_factory=list)
+    room_files: List[str] = field(default_factory=list)
+    action_files: List[str] = field(default_factory=list)
+ 
+    # Additional configuration
+    config: Dict[str, Any] = field(default_factory=dict)
+    
+    @classmethod
+    def from_json(cls, json_path: Path) -> 'Manifest':
+        """Load manifest from JSON file"""
+        try:
+            with open(json_path, 'r') as f:
+                data = json.load(f)
+            
+            # Map JSON keys to manifest fields
+            return cls(
+                game_name=data.get("game_name", "XXX"),
+                version=data.get("version", "0.0.0"),
+                description=data.get("description", ""),
+                author=data.get("author", ""),
+                difficulty=data.get("difficulty", ""),
+                object_files=data.get("objects", ["objects.json"]),
+                room_files=data.get("rooms", ["rooms.json"]),
+                action_files=data.get("actions", ["actions.py"]),
+                config=data.get("config", {})
+            )
+        except Exception as e:
+            logger.error(f"Failed to load manifest from {json_path}: {e}")
+            raise ResourceLoadError(f"Cannot load manifest: {e}")
+
+
 #game = game
+manifest: Optional[Manifest] = None
 function_registry: Dict[str, Callable] = {}
 loaded_modules: Dict[str, Any] = {}
 objects: Dict[str, Object] = {}
@@ -272,27 +324,35 @@ def load_game_module(module_path: Union[str, Path]) -> bool:
     """
     
     try:
+        global manifest 
+
+        manifest = Manifest.from_json(Path(module_path) / "game.json")
+        logger.info(f"Loaded manifest for game: {manifest.game_name} v{manifest.version}")
+
         # Load resources in order
-        module_name = "actions"
         success = True
 
         # 1. Load action module for action routines
-        if not _load_python_module(module_name, module_path):
-            logger.warning(f"Failed to load action module: {module_name}")
-            success = False
+        for module_name in manifest.action_files:
+            if not _load_python_module(module_name, module_path):
+                logger.warning(f"Failed to load action module: {module_name}")
+                success = False
 
         # 2. Load the objects (this includes doors)
-        if not Object._load_objects(module_path / "objects.json"):
-            logger.error("Failed to load objects")
-            success = False
+        for obj_file in manifest.object_files:
+            if not Object._load_objects(module_path / obj_file):
+                logger.error("Failed to load objects")
+                success = False
 
         # 3. Load the room objects
-        if not Room._load_rooms(module_path / "rooms.json"):
-            logger.error("Failed to load rooms")
-            success = False
+        for room_file in manifest.room_files:
+            if not Room._load_rooms(module_path / room_file):
+                logger.error("Failed to load rooms")
+                success = False
 
 
         logger.info(f"Game module loaded: {success}")
+        logger.info(f"Loaded {len(objects)} objects , {len(rooms)} rooms, and {len(function_registry)} functions")
         return success
         
     except Exception as e:
@@ -313,7 +373,7 @@ def _load_python_module(module_name: str, module_path: Path) -> bool:
     """
     try:
         # Construct module path
-        module_file: Path = module_path / f"{module_name}.py"
+        module_file: Path = module_path / module_name
 
         if not module_file.exists():
             logger.debug(f"Module file not found: {module_file}")
@@ -360,6 +420,8 @@ def _register_action_handlers(module: Any) -> None:
             if callable(obj):
                 function_registry[name] = obj           
                 logger.info(f"Registered action handler: {name}")
+
+        logger.info(f"Loaded {len(function_registry)} fucntions from module {module.__name__}")
                 
     except Exception as e:
         logger.error(f"Error registering action handlers: {e}")
@@ -370,7 +432,7 @@ def _register_action_handlers(module: Any) -> None:
 
 
 if __name__ == "__main__":
-    fp = Path("./core")
+    fp = Path("./Deadline")
     load_game_module(fp)
 
 

@@ -1,0 +1,680 @@
+{
+  "ROSE": {
+    "description": "roses",
+    "synonyms": ["bed", "rose", "roses"],
+    "adjectives": ["red", "white", "pink", "yellow"],
+    "location": "LOCAL-GLOBALS",
+    "action": "ROSE-F"
+  },
+  
+  "HOUSE": {
+    "description": "house",
+    "synonyms": ["house", "wall"],
+    "adjectives": ["robner"],
+    "location": "LOCAL-GLOBALS",
+    "action": "HOUSE-F"
+  },
+  
+  "LAWN": {
+    "description": "lawn",
+    "synonyms": ["lawn", "grass"],
+    "adjectives": ["green"],
+    "location": "LOCAL-GLOBALS",
+    "action": "LAWN-F"
+  },
+  
+  "GROUND": {
+    "description": "ground",
+    "synonyms": ["ground", "dirt", "mud", "soil"],
+    "adjectives": ["hard"],
+    "location": "GLOBAL-OBJECTS",
+    "action": "GROUND-F"
+  },
+  
+  "AIR": {
+    "description": "air",
+    "synonyms": ["air", "wind", "breeze"],
+    "location": "GLOBAL-OBJECTS",
+    "action": "AIR-F"
+  },
+  
+  "SHED": {
+    "description": "shed",
+    "synonyms": ["shed", "cabin"],
+    "adjectives": ["log", "wooden", "wood"],
+    "location": "LOCAL-GLOBALS",
+    "action": "SHED-F"
+  },
+  
+  "LAKE": {
+    "description": "lake",
+    "synonyms": ["lake", "water"],
+    "location": "LOCAL-GLOBALS",
+    "action": "LAKE-F"
+  },
+  
+  "BALCONY": {
+    "description": "balcony",
+    "synonyms": ["balcony"],
+    "location": "LOCAL-GLOBALS"
+  },
+
+  "GLOBAL-MEETING": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "meeting",
+    "synonyms": ["meeting","rendezvous","tryst"],
+    "adjectives": ["secret","private"]
+  },
+
+  "GLOBAL-CALL": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "telephone conversation",
+    "synonyms": ["call","conversation","left","right"],
+    "adjectives": ["telephone","phone"],
+    "action": "GLOBAL-CALL-F"
+  },
+
+  "SHED-WINDOW": {
+    "location": "LOCAL-GLOBALS",
+    "description": "window",
+    "synonyms": ["window"],
+    "adjectives": ["shed","dirty","grimy"],
+    "action": "SHED-WINDOW-F"
+  },
+
+  "INTNUM": {
+    "location": "GLOBAL-OBJECTS",
+    "synonyms": ["intnum"],
+    "description": "number"
+  },
+
+  "PISTOL": {
+    "description": "smoking gun",
+    "synonyms": ["pistol","gun"],
+    "adjectives": ["smoking"],
+    "fdesc": "Lying beside the body is a smoking gun.",
+    "flags": ["TAKEBIT"],
+    "action": "PISTOL-F"
+  },
+
+  "CORPSE": {
+    "description": "body of Ms. Dunbar",
+    "synonyms": ["body","dunbar","corpse","stiff"],
+    "adjectives": ["ms","bloody"],
+    "fdesc": "Sprawled on the floor is the body of Ms. Dunbar.",
+    "action": "CORPSE-F"
+  },
+
+  "SUICIDE-NOTE": {
+    "description": "suicide note",
+    "synonyms": ["note","handwr"],
+    "adjectives": ["suicide"],
+    "fdesc": "Next to the body, near a pool of blood, is a note.",
+    "flags": ["TAKEBIT","READBIT"],
+    "action": "SUICIDE-NOTE-F",
+    "text": "The note is written in thin blue ink in a very unsteady hand and\nis smeared with blood from your touch.  It says:\n    \"I killed Mr. Robner.  Please forgive me.\""
+  },
+
+  "POOL-OF-BLOOD": {
+    "description": "pool of blood",
+    "synonyms": ["pool","blood"],
+    "ldesc": "A pool of blood is at the head of the body."
+  },
+
+  "GLOBAL-PEN": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "pen",
+    "synonyms": ["pen"],
+    "adjectives": ["blue"],
+    "action": "GLOBAL-PEN-F"
+  },
+
+  "SEURAT": {
+    "location": "DINING-ROOM",
+    "description": "Seurat",
+    "synonyms": ["seurat"],
+    "flags": ["NDESCBIT"],
+    "action": "SEURAT-F"
+  },
+
+  "PAINTINGS": {
+    "location": "DINING-ROOM",
+    "description": "collection of paintings",
+    "synonyms": ["painting","collection","picture"],
+    "adjectives": ["painting"],
+    "flags": ["NDESCBIT"],
+    "action": "PAINTINGS-F"
+  },
+
+  "SHELF-UNIT": {
+    "location": "KITCHEN",
+    "description": "shelf unit",
+    "synonyms": ["shelf","unit"],
+    "adjectives": ["beautiful","shelf"],
+    "flags": ["NDESCBIT"]
+  },
+
+  "APPLIANCE-1": {
+    "location": "KITCHEN",
+    "description": "appliance",
+    "synonyms": ["appliance","oven","stove","refrigerator"],
+    "flags": ["NDESCBIT"],
+    "action": "APPLIANCE-F"
+  },
+
+  "APPLIANCE-2": {
+    "location": "KITCHEN",
+    "description": "appliance",
+    "synonyms": ["washer","dishwasher","disposal","compactor"],
+    "adjectives": ["garbage","dish"],
+    "flags": ["NDESCBIT","DUPLICATE"],
+    "action": "APPLIANCE-F"
+  },
+
+  "DINING-ROOM-TABLE": {
+    "location": "DINING-ROOM",
+    "description": "long table",
+    "synonyms": ["table"],
+    "adjectives": ["long"],
+    "flags": ["FURNITURE","NDESCBIT"]
+  },
+
+  "TRESTLE-TABLE": {
+    "location": "DINING-ROOM",
+    "description": "trestle table",
+    "synonyms": ["table"],
+    "adjectives": ["large","trestle"],
+    "flags": ["FURTINTURE","NDESCBIT"]
+  },
+
+  "PEN": {
+    "description": "blue pen",
+    "synonyms": ["pen"],
+    "adjectives": ["blue"],
+    "flags": ["TAKEBIT"],
+    "action": "PEN-F"
+  },
+
+  "GLOBAL-SAFE": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "safe",
+    "synonyms": ["combination","safe"]
+  },
+
+  "CORRIDOR-WINDOW": {
+    "location": "CORRIDOR-4",
+    "description": "window",
+    "synonyms": ["window"],
+    "flags": ["NDESCBIT"],
+    "action": "CORRIDOR-WINDOW-F"
+  },
+
+  "TODAY": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "today",
+    "synonyms": ["today"],
+    "action": "TODAY-F"
+  },
+
+  "GLOBAL-WARRANT": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "search warrant",
+    "synonyms": ["warrant"],
+    "adjectives": ["search"],
+    "action": "GLOBAL-WARRANT-F"
+  },
+
+  "GLOBAL-WATER": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "water",
+    "synonyms": ["water"]
+  },
+
+  "CIRCULAR": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "circular",
+    "synonyms": ["circular"]
+  },
+
+  "L-RAILING": {
+    "location": "LIBRARY-BALCONY",
+    "synonyms": ["railing"],
+    "adjectives": ["metal"],
+    "description": "railing",
+    "flags": ["NDESCBIT"],
+    "action": "L-RAILING-F"
+  },
+
+  "B-RAILING": {
+    "location": "BEDROOM-BALCONY",
+    "synonyms": ["railing"],
+    "adjectives": ["metal"],
+    "description": "railing",
+    "flags": ["NDESCBIT"],
+    "action": "B-RAILING-F"
+  },
+
+  "L-BALCONY": {
+    "location": "LIBRARY-BALCONY",
+    "synonyms": ["balcony"],
+    "description": "balcony",
+    "flags": ["NDESCBIT"],
+    "action": "L-BALCONY-F"
+  },
+
+  "B-BALCONY": {
+    "location": "BEDROOM-BALCONY",
+    "synonyms": ["balcony"],
+    "description": "balcony",
+    "flags": ["NDESCBIT"],
+    "action": "B-BALCONY-F"
+  },
+
+  "GLOBAL-MERGER": {
+    "location": "GLOBAL-OBJECTS",
+    "synonyms": ["merger"],
+    "adjectives": ["omnidyne"],
+    "description": "merger"
+  },
+
+  "GLOBAL-ROOM": {
+    "location": "GLOBAL-OBJECTS",
+    "synonyms": ["room","wall","walls"],
+    "description": "room",
+    "action": "GLOBAL-ROOM-F"
+  },
+
+  "OBJECT-PAIR": {
+    "description": "combination of objects specified",
+    "action": "OBJECT-PAIR-F"
+  },
+
+  "NOON": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "noontime",
+    "synonyms": ["noon"]
+  },
+
+  "CRYSTAL-LAMP": {
+    "location": "FOYER",
+    "description": "crystal lamp",
+    "synonyms": ["lamp","chandelier"],
+    "adjectives": ["fine","crystal"],
+    "flags": ["NDESCBIT"]
+  },
+
+  "FIREPLACE": {
+    "location": "LIVING-ROOM",
+    "description": "fieldstone fireplace",
+    "synonyms": ["firepl"],
+    "adjectives": ["fields"],
+    "flags": ["NDESCBIT"]
+  },
+
+  "WOOD-PILE": {
+    "location": "LIVING-ROOM",
+    "description": "wood pile",
+    "synonyms": ["pile"],
+    "adjectives": ["wood"],
+    "flags": ["NDESCBIT"]
+  },
+
+  "PORTRAITS": {
+    "location": "LIVING-ROOM",
+    "description": "collection of portraits",
+    "synonyms": ["portraits","collection","picture","painting"],
+    "adjectives": ["portraits"],
+    "flags": ["NDESCBIT"],
+    "action": "PORTRAITS-F"
+  },
+
+  "LR-CABINETS": {
+    "location": "LIVING-ROOM",
+    "description": "fine wooden cabinets",
+    "synonyms": ["cabinet"],
+    "adjectives": ["fine","wooden"],
+    "flags": ["NDESCBIT"],
+    "action": "LR-CABINETS-F"
+  },
+
+  "K-CABINETS": {
+    "location": "KITCHEN",
+    "description": "cabinet",
+    "synonyms": ["cabinet"],
+    "flags": ["NDESCBIT","CONTBIT"],
+    "capacity": 50,
+    "action": "K-CABINETS-F"
+  },
+
+  "SILVERWARE": {
+    "location": "K-CABINETS",
+    "description": "set of silverware",
+    "synonyms": ["silver"],
+    "flags": ["TRYTAKEBIT"],
+    "action": "SILVERWARE-F"
+  },
+
+  "GLASSES": {
+    "location": "K-CABINETS",
+    "description": "glass collection",
+    "synonyms": ["glass","glasses","collection"],
+    "adjectives": ["glass"],
+    "flags": ["TRYTAKEBIT"],
+    "action": "GLASSES-F"
+  },
+
+  "P-SHELVES": {
+    "location": "PANTRY",
+    "description": "set of wooden shelves",
+    "synonyms": ["shelves"],
+    "adjectives": ["wooden"],
+    "flags": ["NDESCBIT","CONTBIT","OPENBIT","SURFACEBIT"],
+    "capacity": 30
+  },
+
+  "FOODS": {
+    "location": "P-SHELVES",
+    "description": "food assortment",
+    "synonyms": ["food","foods","can","cans"],
+    "adjectives": ["dried","canned","packaged"],
+    "action": "FOODS-F"
+  },
+
+  "FRUIT-TREES": {
+    "location": "LOCAL-GLOBALS",
+    "description": "fruit tree",
+    "synonyms": ["tree"],
+    "adjectives": ["fruit","apple","pear","peach"],
+    "flags": ["NDESCBIT"],
+    "action": "FRUIT-TREES-F"
+  },
+
+  "BERRY-BUSH": {
+    "location": "IN-ORCHARD",
+    "description": "berry bush",
+    "synonyms": ["bush"],
+    "adjectives": ["berry","berrie"],
+    "flags": ["NDESCBIT"],
+    "action": "BERRY-BUSH-F"
+  },
+
+  "BATHROOM-MIRROR": {
+    "location": "MASTER-BATH",
+    "description": "mirror",
+    "synonyms": ["mirror"],
+    "flags": ["NDESCBIT"],
+    "action": "BATHROOM-MIRROR-F"
+  },
+
+  "HANGING-PLANTS": {
+    "location": "MASTER-BATH",
+    "description": "hanging plant",
+    "synonyms": ["plant","plants"],
+    "adjectives": ["hanging"],
+    "flags": ["NDESCBIT"]
+  },
+
+  "DUST": {
+    "location": "HIDDEN-CLOSET",
+    "description": "dust and cobwebs",
+    "synonyms": ["dust","cobwebs"],
+    "flags": ["NDESCBIT"]
+  },
+
+  "GLOBAL-HIDDEN-CLOSET": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "hidden closet",
+    "synonyms": ["closet"],
+    "adjectives": ["hidden"],
+    "flags": ["NDESCBIT"]
+  },
+
+  "TREE-TOPS": {
+    "location": "BEDROOM-BALCONY",
+    "description": "treetop",
+    "synonyms": ["treetop","top"],
+    "adjectives": ["tree"],
+    "flags": ["NDESCBIT"],
+    "action": "TREE-TOPS-F"
+  },
+
+  "FOUR-POSTER": {
+    "location": "MASTER-BEDROOM",
+    "description": "four-poster bed",
+    "synonyms": ["bed","poster"],
+    "adjectives": ["four","four-"],
+    "flags": ["NDESCBIT","SURFACEBIT","CONTBIT","OPENBIT","FURNITURE","VEHBIT"],
+    "capacity": 30,
+    "action": "BED-F"
+  },
+
+  "LOUNGE": {
+    "location": "MASTER-BEDROOM",
+    "description": "lounge",
+    "synonyms": ["lounge"],
+    "flags": ["NDESCBIT","FURNITURE"]
+  },
+
+  "BEDROOM-MIRROR": {
+    "location": "MASTER-BEDROOM",
+    "description": "large mirror",
+    "synonyms": ["mirror","frame"],
+    "adjectives": ["large","gilt"],
+    "flags": ["NDESCBIT"],
+    "action": "BATHROOM-MIRROR-F"
+  },
+
+  "SHAVING-GEAR": {
+    "location": "GEORGE-BATH",
+    "description": "shaving gear",
+    "synonyms": ["gear","razor","cream"],
+    "adjectives": ["shaving"],
+    "flags": ["NDESCBIT"]
+  },
+
+  "LIQUOR-CABINET": {
+    "location": "GEORGE-ROOM",
+    "description": "liquor cabinet",
+    "synonyms": ["cabinet"],
+    "adjectives": ["liquor"],
+    "flags": ["NDESCBIT","CONTBIT","SEARCHBIT"],
+    "capacity": 30
+  },
+
+  "SCOTCH": {
+    "location": "LIQUOR-CABINET",
+    "description": "bottle of Scotch",
+    "fdesc": "A half-filled bottle of Scotch is in the cabinet.",
+    "synonyms": ["bottle","scotch"],
+    "adjectives": ["scotch"],
+    "flags": ["TAKEBIT"],
+    "action": "LIQUOR-F"
+  },
+
+  "BOURBON": {
+    "location": "LIQUOR-CABINET",
+    "description": "bottle of Bourbon",
+    "fdesc": "A nearly empty bottle of Bourbon is here.",
+    "synonyms": ["bottle","bourbon"],
+    "adjectives": ["bourbon"],
+    "flags": ["TAKEBIT"],
+    "action": "LIQUOR-F"
+  },
+
+  "STEREO": {
+    "location": "GEORGE-ROOM",
+    "description": "stereo",
+    "synonyms": ["stereo","volume","music","hifi"],
+    "flags": ["NDESCBIT"],
+    "action": "STEREO-F"
+  },
+
+  "RECORDS": {
+    "location": "GEORGE-ROOM",
+    "description": "record collection",
+    "synonyms": ["record"],
+    "flags": ["NDESCBIT"],
+    "action": "RECORDS-F"
+  },
+
+  "TAPES": {
+    "location": "GEORGE-ROOM",
+    "description": "tape collection",
+    "synonyms": ["tape","tapes","cassette"],
+    "flags": ["NDESCBIT"],
+    "action": "TAPES-F"
+  },
+
+  "ROURKE-SHELVES": {
+    "location": "ROURKE-BATH",
+    "description": "shelf",
+    "synonyms": ["shelves","shelf"],
+    "flags": ["NDESCBIT","CONTBIT","OPENBIT","SURFACEBIT"],
+    "capacity": 30
+  },
+
+  "C11-SHELVES": {
+    "location": "CLOSET-11",
+    "description": "shelf",
+    "synonyms": ["shelves","shelf"],
+    "flags": ["NDESCBIT","CONTBIT","OPENBIT","SURFACEBIT"],
+    "capacity": 30
+  },
+
+  "C11-LINENS": {
+    "location": "C11-SHELVES",
+    "description": "linens",
+    "synonyms": ["linens","sheets","linen"],
+    "flags": ["NDESCBIT"],
+    "action": "CLOSET-STUFF-F"
+  },
+
+  "UC-SHELVES": {
+    "location": "UPSTAIRS-CLOSET",
+    "description": "shelf",
+    "synonyms": ["shelves","shelf"],
+    "flags": ["NDESCBIT","CONTBIT","OPENBIT","SURFACEBIT"],
+    "capacity": 30
+  },
+
+  "UC-LINENS": {
+    "location": "UC-SHELVES",
+    "description": "linens",
+    "synonyms": ["linens","sheets","linen"],
+    "flags": ["NDESCBIT"],
+    "action": "CLOSET-STUFF-F"
+  },
+
+  "UC-TOWELS": {
+    "location": "UC-SHELVES",
+    "description": "towel",
+    "synonyms": ["towel","towels"],
+    "flags": ["NDESCBIT"],
+    "action": "CLOSET-STUFF-F"
+  },
+
+  "CLOSET": {
+    "location": "LOCAL-GLOBALS",
+    "description": "closet",
+    "synonyms": ["closet"],
+    "action": "GLOBAL-ROOM-F"
+  },
+
+  "GUEST-WINDOW": {
+    "location": "GUEST-ROOM",
+    "description": "window",
+    "synonyms": ["window"],
+    "action": "GUEST-WINDOW-F",
+    "flags": ["NDESCBIT"]
+  },
+
+  "SOGGY-WILL": {
+    "description": "wet piece of paper",
+    "synonyms": ["piece","paper"],
+    "adjectives": ["paper","wet","drenched","soggy"],
+    "flags": ["TAKEBIT","READBIT"],
+    "text": "The paper was once some sort of document. It is now smeared and\ncompletely unreadable."
+  },
+
+  "PENCIL": {
+    "location": "LIBRARY",
+    "description": "pencil",
+    "synonyms": ["pencil"],
+    "fdesc": "A pencil is lying on the floor near the desk.",
+    "flags": ["TAKEBIT"]
+  },
+
+  "GLOBAL-HERE": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "here",
+    "synonyms": ["here"],
+    "flags": ["NDESCBIT"],
+    "action": "GLOBAL-HERE-F"
+  },
+
+  "GLOBAL-RED-HERRINGS": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "red herring",
+    "synonyms": ["herring"],
+    "adjectives": ["red"],
+    "flags": ["NDESCBIT"],
+    "action": "GLOBAL-RED-HERRINGS-F"
+  },
+
+  "RECURSIVE-BOOK": {
+    "location": "LIVING-ROOM",
+    "description": "mystery book",
+    "synonyms": ["book"],
+    "adjectives": ["hardcover","mystery"],
+    "fdesc": "Sitting on a table is a hardcover book.",
+    "flags": ["TAKEBIT","READBIT"],
+    "action": "RECURSIVE-BOOK-F"
+  },
+
+  "GLOBAL-ENDING": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "ending",
+    "adjectives": ["last"],
+    "synonyms": ["ending","end","book","page"],
+    "action": "GLOBAL-ENDING-F"
+  },
+
+  "STUB": {
+    "description": "ticket stub",
+    "synonyms": ["ticket","stub"],
+    "adjectives": ["ticket"],
+    "flags": ["TAKEBIT","READBIT"],
+    "ldesc": "Lying on the ground is what appears to be a ticket stub.",
+    "text": "Hartford\n Philharmonic\n  Orchestra\n\n July 7, 1982\n\n   - 8PM -\n\nRow R / Seat 7\n\n-^-^-^-^-^-^-^"
+  },
+
+  "RANDOM-MEAL": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "meal",
+    "synonyms": ["meal","lunch","dinner","breakfast"],
+    "action": "RANDOM-MEAL-F"
+  },
+
+  "GLOBAL-HOUSE": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "house",
+    "synonyms": ["house"],
+    "action": "GLOBAL-HOUSE-F"
+  },
+
+  "GRAPE-ARBOR": {
+    "location": "IN-ORCHARD",
+    "description": "grape arbor",
+    "synonyms": ["arbor","grape"],
+    "adjectives": ["grape"],
+    "flags": ["NDESCBIT"],
+    "action": "GRAPE-ARBOR-F"
+  },
+
+  "GLOBAL-CONCERT": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "concert",
+    "synonyms": ["symphony","concert","performance"],
+    "adjectives": ["symphony","philharmonic"]
+  }
+}

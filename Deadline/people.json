@@ -1,0 +1,184 @@
+
+{ 
+  "PLAYER": {
+    "description": "player",
+    "synonyms": ["me", "player", "inspector"],
+    "location": "SOUTH-LAWN",
+    "action": "PLAYER-F",
+    "flags": ["NDESCBIT"],
+    "character": 0
+  },
+  
+  "GARDENER": {
+    "description": "Mr. McNabb",
+    "synonyms": ["mcnabb"],
+    "adjectives": ["mr", "mister", "angus"],
+    "location": "NORTH-LAWN",
+    "action": "GARDENER-F",
+    "descfcn": "GARDENER-F",
+    "flags": ["PERSON", "OPENBIT"],
+    "capacity": 40,
+    "character": 1,
+    "state": 0
+  },
+  
+  "GLOBAL-GARDENER": {
+    "description": "Mr. McNabb",
+    "synonyms": ["mcnabb"],
+    "adjectives": ["mr", "mister", "angus"],
+    "location": "GLOBAL-OBJECTS",
+    "flags": ["PERSON"],
+    "action": "GLOBAL-PERSON",
+    "character": 1
+  },
+  
+  "BAXTER": {
+    "description": "Mr. Baxter",
+    "synonyms": ["baxter"],
+    "adjectives": ["mister", "mr"],
+    "flags": ["PERSON", "OPENBIT"],
+    "capacity": 40,
+    "action": "BAXTER-F",
+    "descfcn": "BAXTER-F",
+    "state": 0,
+    "character": 2
+  },
+  
+  "GLOBAL-BAXTER": {
+    "description": "Mr. Baxter",
+    "synonyms": ["baxter"],
+    "adjectives": ["mister", "mr"],
+    "location": "GLOBAL-OBJECTS",
+    "flags": ["PERSON"],
+    "action": "GLOBAL-PERSON",
+    "character": 2
+  },
+  
+  "DUNBAR": {
+    "description": "Ms. Dunbar",
+    "synonyms": ["dunbar"],
+    "adjectives": ["ms", "mrs"],
+    "location": "LIVING-ROOM",
+    "flags": ["PERSON", "OPENBIT"],
+    "capacity": 40,
+    "action": "DUNBAR-F",
+    "descfcn": "DUNBAR-F",
+    "state": 0,
+    "character": 3
+  },
+  
+  "GLOBAL-DUNBAR": {
+    "description": "Ms. Dunbar",
+    "synonyms": ["dunbar"],
+    "adjectives": ["ms", "mrs"],
+    "location": "GLOBAL-OBJECTS",
+    "flags": ["PERSON"],
+    "action": "GLOBAL-PERSON",
+    "character": 3
+  },
+  
+  "GEORGE": {
+    "description": "George",
+    "synonyms": ["george", "robner"],
+    "adjectives": ["george"],
+    "location": "GEORGE-ROOM",
+    "flags": ["PERSON", "OPENBIT"],
+    "capacity": 40,
+    "action": "GEORGE-F",
+    "descfcn": "GEORGE-F",
+    "state": 0,
+    "character": 4
+  },
+  
+  "GLOBAL-GEORGE": {
+    "description": "George",
+    "synonyms": ["george", "robner"],
+    "adjectives": ["george"],
+    "location": "GLOBAL-OBJECTS",
+    "flags": ["PERSON"],
+    "action": "GLOBAL-PERSON",
+    "character": 4
+  },
+  
+  "MRS-ROBNER": {
+    "description": "Mrs. Robner",
+    "synonyms": ["robner", "mother", "leslie"],
+    "adjectives": ["mrs", "ms", "leslie"],
+    "location": "LIVING-ROOM",
+    "flags": ["PERSON", "OPENBIT"],
+    "capacity": 40,
+    "action": "MRS-ROBNER-F",
+    "descfcn": "MRS-ROBNER-F",
+    "state": 0,
+    "character": 5
+  },
+  
+  "GLOBAL-MRS-ROBNER": {
+    "description": "Mrs. Robner",
+    "synonyms": ["robner", "mother", "leslie"],
+    "adjectives": ["mrs", "ms", "leslie"],
+    "location": "GLOBAL-OBJECTS",
+    "flags": ["PERSON"],
+    "action": "GLOBAL-PERSON",
+    "character": 5
+  },
+  
+  "ROURKE": {
+    "description": "Mrs. Rourke",
+    "synonyms": ["rourke"],
+    "adjectives": ["ms", "mrs"],
+    "location": "KITCHEN",
+    "flags": ["PERSON", "OPENBIT"],
+    "capacity": 40,
+    "action": "ROURKE-F",
+    "descfcn": "ROURKE-F",
+    "state": 0,
+    "character": 6
+  },
+  
+  "GLOBAL-ROURKE": {
+    "description": "Mrs. Rourke",
+    "synonyms": ["rourke"],
+    "adjectives": ["ms", "mrs"],
+    "location": "GLOBAL-OBJECTS",
+    "flags": ["PERSON"],
+    "action": "GLOBAL-PERSON",
+    "character": 6
+  },
+
+  "GLOBAL-STEVEN": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "Steven",
+    "synonyms": ["steven","steve"]
+  },
+
+  "GLOBAL-DUFFY": {
+    "location": "GLOBAL-OBJECTS",
+    "synonyms": ["duffy"],
+    "adjectives": ["sergeant"],
+    "description": "Sergeant Duffy",
+    "action": "GLOBAL-DUFFY-F"
+  },
+
+  "COATES": {
+    "synonyms": ["coates"],
+    "adjectives": ["mr"],
+    "description": "Mr. Coates",
+    "flags": ["PERSON"],
+    "character": 7,
+    "state": 0,
+    "action": "COATES-F",
+    "descfcn": "COATES-F"
+  },
+
+  "GLOBAL-COATES": {
+    "location": "GLOBAL-OBJECTS",
+    "synonyms": ["coates"],
+    "adjectives": ["mr"],
+    "description": "Mr. Coates",
+    "flags": ["PERSON"],
+    "character": 7,
+    "action": "GLOBAL-PERSON"
+  }
+
+}

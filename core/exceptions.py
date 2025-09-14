@@ -28,3 +28,26 @@ class InvalidStateException(GameException):
 class TimeException(GameException):
     """Exception raised for time-related errors"""
     pass
+
+class ObjectNotFoundError(GameException):
+    """Raised when an object cannot be found"""
+    pass
+
+
+class InvalidActionError(GameException):
+    """Raised when an invalid action is attempted"""
+    pass
+
+
+class PropertyError(GameException):
+    """Raised when there's an issue with object properties"""
+    pass
+
+class ResourceLoadError(GameException):
+    """Exception raised when resource loading fails"""
+    pass
+
+
+class ActionRegistryError(GameException):
+    """Exception raised when action registration fails"""
+    pass

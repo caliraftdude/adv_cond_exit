@@ -1,0 +1,167 @@
+{
+    "LOBLO-BOTTLE": {
+        "location": "DUNBAR-CABINET",
+        "description": "bottle of LoBlo",
+        "synonyms": ["bottle","loblo","label"],
+        "adjectives": ["loblo"],
+        "fdesc": "On the bottom shelf is a bottle of tablets labelled 'LoBlo'.",
+        "flags": ["TAKEBIT","READBIT","CONTBIT"],
+        "capacity": 5,
+        "text": "Frobizz Pharmacy   #69105\n\nMs. S. Dunbar\nLoBLO\nTake 1 tablet 3 times daily\n\nFizmo Labs, Ltd. - Kingston, Ont.\nLoBLO Brand of Methsparin, USP\n10mg Tablets\n\nWarning:  LoBLO may be dangerous\nwhen used in combination with\nother medications.  Please read\nthe enclosed circular prior to\nusing these tablets."
+    },
+
+    "GLOBAL-EBULLION": {
+        "location": "GLOBAL-OBJECTS",
+        "description": "Ebullion tablets",
+        "synonyms": ["tablets","ebullion","pills"],
+        "adjectives": ["ebullion"]
+    },
+
+    "GLOBAL-LOBLO": {
+        "location": "GLOBAL-OBJECTS",
+        "description": "LoBlo tablets",
+        "synonyms": ["tablets","loblo","pills"],
+        "adjectives": ["loblo"]
+    },
+
+    "LOBLO": {
+        "location": "LOBLO-BOTTLE",
+        "description": "couple of LoBLO tablets",
+        "synonyms": ["couple","tablets","pills","loblo"],
+        "adjectives": ["loblo"],
+        "flags": ["TAKEBIT","DRUGBIT"],
+        "size": 4,
+        "action": "LOBLO-F",
+        "count": 10
+    },
+
+    "ASPIRIN-BOTTLE": {
+        "location": "DUNBAR-CABINET",
+        "description": "bottle of aspirin",
+        "fdesc": "On the top shelf, among various toilet items, is a bottle of aspirin.",
+        "synonyms": ["bottle","aspirin","label"],
+        "adjectives": ["aspirin"],
+        "flags": ["TAKEBIT","READBIT","CONTBIT"],
+        "capacity": 5,
+        "text": "Generic ASPIRIN, usp\n     30mg / 5 gr"
+    },
+
+    "ASPIRIN": {
+        "location": "ASPIRIN-BOTTLE",
+        "description": "handful of aspirin tablets",
+        "synonyms": ["pills","tablets","aspirin","handful"],
+        "adjectives": ["aspirin"],
+        "flags": ["TAKEBIT","DRUGBIT"],
+        "size": 4,
+        "count": 15
+    },
+
+    "DUM-KOF-BOTTLE": {
+        "location": "DUNBAR-CABINET",
+        "description": "bottle of cough medicine",
+        "fdesc": "Standing on a shelf beside some nail polish is a bottle of cough medicine.",
+        "synonyms": ["bottle","medicine","dum-kof","label"],
+        "adjectives": ["cough"],
+        "flags": ["TAKEBIT","READBIT","CONTBIT"],
+        "capacity": 4,
+        "text": "General Drug Co.\n        DUM - KOF\n     Cough Supressant\n\nDirections:  1 tsp every 3-4 hrs\nWarning:  Take as Directed.  May\ncause sedation when taken with other\ndrugs."
+    },
+
+    "DUM-KOF": {
+        "location": "DUM-KOF-BOTTLE",
+        "description": "quantity of cough syrup",
+        "synonyms": ["syrup"],
+        "adjectives": ["cough"],
+        "flags": ["TAKEBIT"],
+        "size": 4,
+        "action": "DUM-KOF-F"
+    },
+
+    "EBULLION-BOTTLE": {
+        "location": "LIBRARY",
+        "description": "bottle of Ebullion",
+        "synonyms": ["label","bottle","ebullion"],
+        "adjectives": ["ebullion"],
+        "flags": ["TAKEBIT","CONTBIT","READBIT"],
+        "capacity": 5,
+        "text": "Head Drugs     No. 44543\n\nMr. Marshall Robner\n\nEBULLION Tablets, 25mg.\n\nDirections: Take 1 or 2 twice\ndaily for depression.\n\nWarning:  Keep out of the reach\nof children.  May be harmful or\nfatal in sufficient dosage."
+    },
+
+    "EBULLION": {
+        "location": "EBULLION-BOTTLE",
+        "description": "couple of Ebullion tablets",
+        "synonyms": ["couple","tablets","ebullion"],
+        "adjectives": ["ebullion"],
+        "count": 3,
+        "size": 4,
+        "flags": ["TAKEBIT","DRUGBIT"],
+        "action": "EBULLION-F"
+    },
+
+    "LAB-REPORT": {
+        "description": "lab report",
+        "synonyms": ["report","paper","note","slip"],
+        "adjectives": ["lab"],
+        "flags": ["TAKEBIT","READBIT"],
+        "text": "Dear Inspector,\n\n    In response to your request for analysis of the ceramic fragment, we have\nfound evidence of a drug called Methsparin, which is usually sold in this\ncountry under the name \"LoBlo"
+    },
+
+    "SNEEZO-BOTTLE": {
+      "location": "MASTER-BATH-COUNTER",
+      "description": "bottle of Sneezo brand decongestant",
+      "synonyms": ["bottle","decong","sneezo"],
+      "adjectives": ["bottle","decong","sneezo","brand"],
+      "fdesc": "On the counter is a bottle of Sneezo tablets.",
+      "flags": ["TAKEBIT","READBIT","CONTBIT","(CAPACITY","5"],
+      "action": "MEDICINE-BOTTLE-F",
+      "text": "Lakeville Pharmacy   #223224\n\nMrs. M. Robner\nTake 1 tablet every 3 hours as needed\n\nSniffle Labs\nSneezo Tablets"
+    },
+
+    "GLOBAL-SNEEZO": {
+      "location": "GLOBAL-OBJECTS",
+      "description": "Sneezo tablets",
+      "synonyms": ["tablets","sneezo","decong","pills"],
+      "adjectives": ["decong","sneezo"]
+    },
+
+    "SNEEZO": {
+      "location": "SNEEZO-BOTTLE",
+      "description": "handful of Sneezo tablets",
+      "synonyms": ["handful","tablets","decong","sneezo"],
+      "adjectives": ["decong","sneezo"],
+      "flags": ["TAKEBIT","DRUGBIT"],
+      "size": 4,
+      "action": "SNEEZO-F",
+      "count": 20
+    },
+
+    "ALLERGONE-BOTTLE": {
+      "location": "MASTER-BATH-COUNTER",
+      "description": "bottle of Allergone",
+      "synonyms": ["bottle","allergone"],
+      "adjectives": ["bottle","allergone"],
+      "fdesc": "Beside a toothbrush is a bottle of Allergone.",
+      "flags": ["TAKEBIT","READBIT","CONTBIT","(ACTION","MEDICINE-BOTTLE-F"],
+      "capacity": 5,
+      "text": "Lakeville Pharmacy   #220331\n\nMrs. M. Robner\nTake 2 tablets every 4 hours as needed\nfor allergy symptoms.  Do not exceed\nrecommended dosage.\n\nRash Labs / Allergone Tablets\n\nMay cause extreme drowsiness.  Do not\nuse machinery or drive while taking this\nmedication.  Combination of Allergone with\nalcohol is dangerous.  In case of overdose\nconsult a physician promptly.  Keep out\nof the reach of children!"
+    },
+
+    "GLOBAL-ALLERGONE": {
+      "location": "GLOBAL-OBJECTS",
+      "description": "Allergone tablets",
+      "synonyms": ["tablets","allergone","pills"],
+      "adjectives": ["allergone"]
+    },
+
+    "ALLERGONE": {
+      "location": "ALLERGONE-BOTTLE",
+      "description": "bunch of Allergone tablets",
+      "synonyms": ["bunch","tablets","allergone"],
+      "adjectives": ["allergone"],
+      "flags": ["TAKEBIT","DRUGBIT"],
+      "size": 4,
+      "action": "ALLERGONE-F",
+      "count": 15
+    }
+}
+

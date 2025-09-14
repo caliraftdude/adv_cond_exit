@@ -1,0 +1,89 @@
+{
+  "LIBRARY-DESK": {
+    "description": "desk",
+    "synonyms": ["desk"],
+    "adjectives": ["large", "executive"],
+    "location": "LIBRARY",
+    "flags": ["NDESCBIT", "SURFACEBIT", "CONTBIT", "OPENBIT"],
+    "action": "LIBRARY-DESK-F",
+    "capacity": 25
+  },
+  
+  "NOTE-PAPER": {
+    "description": "note pad",
+    "synonyms": ["pad", "paper", "notepad"],
+    "adjectives": ["note", "white"],
+    "location": "LIBRARY-DESK",
+    "fdesc": "Lying atop the desk is a pad of white note paper.",
+    "flags": ["TAKEBIT", "READBIT", "BURNBIT"],
+    "action": "NOTE-PAPER-F"
+  },
+  
+  "DESK-CALENDAR": {
+    "description": "desk calendar",
+    "synonyms": ["calendar", "july"],
+    "adjectives": ["desk"],
+    "location": "LIBRARY-DESK",
+    "flags": ["TAKEBIT", "READBIT", "BURNBIT", "TURNBIT"],
+    "action": "DESK-CALENDAR-F",
+    "descfcn": "DESK-CALENDAR-F"
+  },
+  
+  "BAXTER-PAPERS": {
+    "description": "stack of papers",
+    "synonyms": ["stack", "papers"],
+    "location": "SAFE",
+    "fdesc": "A stack of papers bound together is in the safe.",
+    "flags": ["TAKEBIT", "READBIT", "BURNBIT", "INVISIBLE"],
+    "text": "Leafing through these papers, it becomes obvious that they incriminate Mr. Baxter in wrongdoings regarding the Focus scandal. They document funds which were embezzled by Baxter and tell how the scandal was hushed up. This evidence would be sufficient to convict Mr. Baxter in the Focus case."
+  },
+  
+  "NEW-WILL": {
+    "description": "new will",
+    "synonyms": ["will"],
+    "adjectives": ["new"],
+    "location": "SAFE",
+    "flags": ["TAKEBIT", "READBIT", "BURNBIT"],
+    "text": "This is Mr. Robner's new will, disowning George and giving his entire estate to his wife."
+  },
+  
+  "NEWSPAPER": {
+    "description": "Daily Herald",
+    "synonyms": ["newspaper", "herald", "section", "paper"],
+    "adjectives": ["daily", "front", "first"],
+    "fdesc": "Leaning against the front door is today's issue of the Daily Herald.",
+    "flags": ["TAKEBIT", "READBIT", "BURNBIT"],
+    "action": "NEWSPAPER-F"
+  },
+  
+  "SECOND-SECTION": {
+    "description": "second section of the Herald",
+    "synonyms": ["section"],
+    "adjectives": ["second", "back", "last"],
+    "location": "GLOBAL-OBJECTS",
+    "flags": ["READBIT"],
+    "action": "SECOND-SECTION-F"
+  },
+  
+  "ENVELOPE": {
+    "description": "handwritten envelope",
+    "synonyms": ["envelope"],
+    "adjectives": ["handwr"],
+    "fdesc": "A handwritten envelope, recently delivered, is lying on the table.",
+    "flags": ["TAKEBIT", "READBIT", "BURNBIT", "CONTBIT"],
+    "capacity": 2,
+    "text": "|\n                  CANAAN CT POST OFFICE|\n                   * JULY 06 * 08:00 *|\n|\n          Mrs. Marshall Robner|\n          506 Lake View Rd.|\n          Maitland, Ct.|\n",
+    "action": "ENVELOPE-F"
+  },
+  
+  "LETTER": {
+    "description": "letter",
+    "synonyms": ["letter"],
+    "location": "ENVELOPE",
+    "size": 1,
+    "flags": ["TAKEBIT", "READBIT", "BURNBIT"],
+    "text": "\"Dear Leslie,|\n   I am sorry to learn that Marshall has been despondent again. His obsessive interest in business must be causing you terrible anguish. It doesn't surprise me that he talks of suicide when he's in this state, but the thought of the business going to Baxter after he's gone will keep him alive.|\n   So George has finally gone too far? It's hard to believe, after all those empty threats, that Marshall actually followed through. It serves that little leech right, if you ask me. This means that, should the unthinkable happen, you will be provided for as you deserve.|\n   I'll see you Friday as usual.||\n                      Love,|\n                      Steven\"|",
+    "action": "LETTER-F"
+  }
+}
+ 
