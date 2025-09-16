@@ -21,8 +21,8 @@ import inspect
 from functools import reduce
 import operator
 
-from flags import ObjectFlag
-from exceptions import ResourceLoadError
+from core.flags import ObjectFlag
+from core.exceptions import ResourceLoadError
 
 #if TYPE_CHECKING:
     #from .property_system import PropertyManager
@@ -141,9 +141,6 @@ class Object(BaseObj) :
         except Exception as e:
             logger.error(f"Error loading objects: {e}")
             return False
-
-
-
 
 
 
@@ -295,7 +292,6 @@ class Room(BaseObj):
         except Exception as e:
             logger.error(f"Error loading rooms: {e}")
             return False
-
 
 
 

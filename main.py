@@ -1,77 +1,93 @@
-
-"""
-Test main function to work out the data objects and data files
-"""
 import logging
+import argparse
+import sys
+
 from pathlib import Path
-from typing import Optional, Union
 
-from .game import Game
-from .resource_loader import ResourceLoader
-
-from Deadline import load_config
-
-
-# Configure logging
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+from core.engine import Engine
 
 
 
-
-# Load the game.json file to find out the import list
-config = load_config()
-
-doors_json = load_config(config["doors"])
-rooms_json = load_config(config["rooms"])
-
-print(config["game_name"])
+def setup_logging(debug: bool = False):
+    """Configure logging for the application"""
+    level = logging.DEBUG if debug else logging.INFO
+    format_str = '%(levelname)s - %(message)s' if not debug else '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    logging.basicConfig(level=level, format=format_str)
 
 
-""" According to the AI, this is the way that the game gets loaded and initialized
-Loading process:
-1. ResourceLoader reads game.json manifest
-2. Loads all JSON data files into Game objects
-3. Dynamically imports Python modules (actions.py, etc.)
-4. Registers all _F functions as action handlers
-5. Wires action handlers to objects/rooms via "action" property
-6. Objects/rooms can now respond to game events
-"""
-
-
-# Example usage
 def main():
-    """Example of how to use the integrated game engine"""
+    """Main entry point"""
+
+    # Set up argument parsing
+    parser = argparse.ArgumentParser(description='Interactive Fiction Engine')
+    parser.add_argument('--debug', action='store_true', help='Enable debug mode')
+    parser.add_argument('--load', type=str, help='Load a saved game')
+    parser.add_argument('--data-path', type=str, help='Path to game data directory')
     
-    # Create engine
-    engine = IntegratedGameEngine()
-    
-    # Load the Deadline game module
-    if engine.load_game_module("Deadline"):
-        print("Game loaded successfully!")
-        print(f"Game info: {engine.get_game_info()}")
-        
-        # Example: Execute room description
-        engine.game.PRSA = "LOOK"
-        result = engine.execute_action(engine.game.HERE, "M-LOOK")
-        
-        # Example: Process a verb on an object
-        engine.process_verb_on_object("EXAMINE", "CALENDAR")
-        
-        # Example: Move player and describe new room
-        engine.game.GOTO("LIVING-ROOM")
-        engine.execute_action("LIVING-ROOM", "M-LOOK")
-        
-        # Example: Interact with an object
-        engine.process_verb_on_object("TAKE", "LADDER")
-        
+    args = parser.parse_args()
+
+    # Setup logging
+    setup_logging(args.debug)
+
+    # Determine data path
+    if args.data_path:
+        data_path = Path(args.data_path)
     else:
-        print("Failed to load game module")
+        # Try to find data directory, First try relative to the module
+        # module_dir = Path(__file__).parent
+        # data_path = module_dir / "data"
+        
+        # if not data_path.exists():
+        #     # Try current directory
+        #     data_path = Path.cwd() / "data"
+        
+        # if not data_path.exists():
+        #     # Try parent directory (development mode)
+        #     data_path = Path.cwd().parent / "data"
+        data_path = Path.cwd() / "Deadline"  # This is a hack for now.. 
+        
+    if not data_path.exists():
+        print(f"Error: Game data package not found.")
+        print(f"Searched in: {data_path}")
+        print("Use --data-path to specify the location of the game data directory.")
+        sys.exit(1)
+
+
+    try:
+        # Initialize game
+        engine = Engine(data_path)
+        
+        # Set debug mode
+        if args.debug:
+            engine.debug_mode = True
+
+
+        # Load game data
+        if not engine.load_game_data():
+            print("Error: Failed to load game data.")
+            print(f"Make sure a game package exists in {data_path}:")
+            sys.exit(1)
+        
+        # Initialize subsystems
+        engine.initialize_subsystems()
+
+        # Load saved game if specified
+        if args.load:
+            if not engine.load_game(args.load):
+                print(f"Warning: Could not load save file '{args.load}'. Starting new game.")
+        
+        # Start the game
+        engine.start_game()
+        
+
+    except KeyboardInterrupt:
+        print("\n\nGame interrupted. Thanks for playing!")
+    except Exception as e:
+        logging.error(f"Fatal error: {e}", exc_info=True)
+        print(f"\nError: {e}")
+        print("\nIf this error persists, please report it with the above details.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
-    # Run the main entrypoint
     main()
