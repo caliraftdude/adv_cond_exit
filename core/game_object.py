@@ -5,33 +5,37 @@
 #   XXX Implements the core object hierarchy and property system
 #   
 ###############################################################################
-from typing import Dict, List, Any, Optional, Set, TYPE_CHECKING, Tuple, Callable, ClassVar
-from dataclasses import dataclass, field
-from enum import Flag, auto, Enum
 import json
 import logging
-
-# temp imports while authoring
-from pathlib import Path
-from typing import Optional, Union
-import importlib
-import importlib.util
-import sys
-import inspect
-from functools import reduce
 import operator
+from typing import ClassVar, List, Dict, Optional, Callable, Any
+from dataclasses import dataclass, field
+from enum import Enum, auto
+from pathlib import Path
+from functools import reduce
+
 
 from core.flags import ObjectFlag
 from core.exceptions import ResourceLoadError
+
+
+
+# from typing import Dict, List, Any, Optional, Set, TYPE_CHECKING, Tuple, Callable, ClassVar
+# from enum import Flag, auto, Enum
+# from typing import Optional, Union
+# import importlib
+# import importlib.util
+# import sys
+# import inspect
+
+
+
 
 #if TYPE_CHECKING:
     #from .property_system import PropertyManager
 
 # Configure logging
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 
@@ -111,36 +115,6 @@ class Object(BaseObj) :
         except Exception as e:
             logger.error(f"Failed to load object {obj_id} with {obj_data}: {e}")
             raise ResourceLoadError(f"Cannot load object: {e}")
-
-    @staticmethod
-    def _load_objects(objects_path: Path) -> bool:
-        """Load object data"""
-
-        try:
-            if not objects_path.exists():
-                logger.debug(f"Objects file not found: {objects_path}")
-                return False
-            
-            with open(objects_path, 'r') as f:
-                data = json.load(f)
-            
-            # Other ways to do this - but this is fine
-            objcount = len(objects)
-
-            # Create Object instances
-            for obj_name, obj_data in data.items():
-                new_object = Object.from_json(obj_name, obj_data)
-
-                objects[obj_name] = new_object
-                logger.info(f"Created id [{new_object.id}]  object: {obj_name} ")
-
-            
-            logger.info(f"Loaded {len(objects)-objcount} objects from {objects_path}")
-            return True
-        
-        except Exception as e:
-            logger.error(f"Error loading objects: {e}")
-            return False
 
 
 
@@ -265,34 +239,6 @@ class Room(BaseObj):
                     )
         return exits
 
-    @staticmethod
-    def _load_rooms(rooms_path: Path) -> bool:
-        """Load room data"""
-        try:
-            if not rooms_path.exists():
-                logger.debug(f"Rooms file not found: {rooms_path}")
-                return False
-            
-            with open(rooms_path, 'r') as f:
-                data = json.load(f)
-            
-            # Other ways to do this - but this is fine
-            objcount = len(rooms)
-
-            # Create Room objects
-            for room_name, room_data in data.items():
-                new_room = Room.from_json(room_name, room_data)
-
-                rooms[room_name] = new_room
-                logger.info(f"Created id [{new_room.id}]  room: {room_name} ")
-            
-            logger.info(f"Loaded {len(rooms)-objcount} rooms from {rooms_path}")
-            return True
-            
-        except Exception as e:
-            logger.error(f"Error loading rooms: {e}")
-            return False
-
 
 
 @dataclass
@@ -337,133 +283,5 @@ class Manifest:
         except Exception as e:
             logger.error(f"Failed to load manifest from {json_path}: {e}")
             raise ResourceLoadError(f"Cannot load manifest: {e}")
-
-
-#game = game
-manifest: Optional[Manifest] = None
-function_registry: Dict[str, Callable] = {}
-loaded_modules: Dict[str, Any] = {}
-objects: Dict[str, Object] = {}
-rooms: Dict[str, Room] = {}
-
-
-def load_game_module(module_path: Union[str, Path]) -> bool:
-    """
-    Load a complete game module with all its resources.
-    Args:
-        module_path: Path to the game module directory
-    """
-    
-    try:
-        global manifest 
-
-        manifest = Manifest.from_json(Path(module_path) / "game.json")
-        logger.info(f"Loaded manifest for game: {manifest.game_name} v{manifest.version}")
-
-        # Load resources in order
-        success = True
-
-        # 1. Load action module for action routines
-        for module_name in manifest.action_files:
-            if not _load_python_module(module_name, module_path):
-                logger.warning(f"Failed to load action module: {module_name}")
-                success = False
-
-        # 2. Load the objects (this includes doors)
-        for obj_file in manifest.object_files:
-            if not Object._load_objects(module_path / obj_file):
-                logger.error("Failed to load objects")
-                success = False
-
-        # 3. Load the room objects
-        for room_file in manifest.room_files:
-            if not Room._load_rooms(module_path / room_file):
-                logger.error("Failed to load rooms")
-                success = False
-
-
-        logger.info(f"Game module loaded: {success}")
-        logger.info(f"Loaded {len(objects)} objects , {len(rooms)} rooms, and {len(function_registry)} functions")
-        return success
-        
-    except Exception as e:
-        logger.error(f"Error loading game module: {e}")
-        return False
-
-
-def _load_python_module(module_name: str, module_path: Path) -> bool:
-    """
-    Dynamically load a Python module containing action handlers.
-    
-    Args:
-        module_name: Name of the module (without .py)
-        module_type: Type of module (actions/events/custom)
-        
-    Returns:
-        True if successful
-    """
-    try:
-        # Construct module path
-        module_file: Path = module_path / module_name
-
-        if not module_file.exists():
-            logger.debug(f"Module file not found: {module_file}")
-            return False
-        
-        # Load the module dynamically
-        spec = importlib.util.spec_from_file_location(
-            f"deadline.game_modules.{module_name}",
-            module_file
-        )
-        
-        if spec and spec.loader:
-            module = importlib.util.module_from_spec(spec)
-            
-            # Add to sys.modules so it can be imported by other modules
-            sys.modules[spec.name] = module
-            
-            # Execute the module
-            spec.loader.exec_module(module)
-            
-            # Store the loaded module
-            loaded_modules[module_name] = module
-            
-            # Register action handlers
-            _register_action_handlers(module)
-         
-            logger.info(f"Loaded Python module: {module_name}")
-            return True
-        
-        return False
-        
-    except Exception as e:
-        logger.error(f"Error loading Python module {module_name}: {e}")
-        return False
-
-
-def _register_action_handlers(module: Any) -> None:
-    """
-    Register action handlers from a module.  Looks for functions ending with _F (ZIL convention).
-    """
-    try:
-        for name, obj in inspect.getmembers(module):
-            # Look for functions ending with _F
-            if callable(obj):
-                function_registry[name] = obj           
-                logger.info(f"Registered action handler: {name}")
-
-        logger.info(f"Loaded {len(function_registry)} fucntions from module {module.__name__}")
-                
-    except Exception as e:
-        logger.error(f"Error registering action handlers: {e}")
-
-
-
-
-
-
-if __name__ == "__main__":
-    fp = Path("./Deadline")
-    load_game_module(fp)
 
 
