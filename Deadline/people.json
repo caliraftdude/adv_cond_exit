@@ -146,20 +146,6 @@
     "character": 6
   },
 
-  "GLOBAL-STEVEN": {
-    "location": "GLOBAL-OBJECTS",
-    "description": "Steven",
-    "synonyms": ["steven","steve"]
-  },
-
-  "GLOBAL-DUFFY": {
-    "location": "GLOBAL-OBJECTS",
-    "synonyms": ["duffy"],
-    "adjectives": ["sergeant"],
-    "description": "Sergeant Duffy",
-    "action": "GLOBAL-DUFFY-F"
-  },
-
   "COATES": {
     "synonyms": ["coates"],
     "adjectives": ["mr"],
@@ -179,6 +165,31 @@
     "flags": ["PERSON"],
     "character": 7,
     "action": "GLOBAL-PERSON"
+  },
+
+
+
+  "GLOBAL-STEVEN": {
+    "location": "GLOBAL-OBJECTS",
+    "description": "Steven",
+    "synonyms": ["steven","steve"]
+  },
+
+  "GLOBAL-DUFFY": {
+    "location": "GLOBAL-OBJECTS",
+    "synonyms": ["duffy"],
+    "adjectives": ["sergeant"],
+    "description": "Sergeant Duffy",
+    "action": "GLOBAL-DUFFY-F"
+  },
+
+  "GLOBAL-MR-ROBNER": {
+    "description": "Mr. Robner",
+    "synonyms": ["robner", "father", "marshall"],
+    "adjectives": ["mr", "mister"],
+    "location": "GLOBAL-OBJECTS",
+    "flags": ["PERSON"],
+    "action": "GLOBAL-MR-ROBNER-F"
   }
 
 }

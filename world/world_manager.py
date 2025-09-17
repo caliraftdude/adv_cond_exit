@@ -24,6 +24,7 @@ class WorldManager:
     Handles all objects, rooms, characters, and their interactions
     """
     
+    
     def __init__(self, manifest: Manifest, data_path: Path):
         """Initialize world manager with game data"""
         self.manifest: Manifest = manifest
@@ -66,7 +67,6 @@ class WorldManager:
                     logger.error("Failed to load objects")
                     success = False
 
-
             # 3. Load the room objects
             for room_file in self.manifest.room_files:
                 if not self._load_rooms(self.data_path / room_file):
@@ -81,6 +81,7 @@ class WorldManager:
             logger.error(f"Error loading game module: {e}")
             return False
 
+        # XXX Post processing needed after the data is loaded?
         # Create player
         self._create_player()
         
@@ -179,10 +180,13 @@ class WorldManager:
                 return False
             
             with open(objects_path, 'r') as f:
-                data = json.load(f)
+                data:Dict = json.load(f)
             
             # Other ways to do this - but this is fine
             objcount = len(self.objects)
+
+            # XXX Some temp BS
+            temp_dict:dict = dict()
 
             # Create Object instances
             for obj_name, obj_data in data.items():

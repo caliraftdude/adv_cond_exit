@@ -51,7 +51,8 @@ class BaseObj:
     name: str  = str()                                                  # Short name (DESC in ZIL)
     description: str = str()                                            # Long description (LDESC)
     flags: ObjectFlag = ObjectFlag.NONE
-    
+    location: Optional['Object'] = None                                 # Where this object is (LOC)
+
     # Vocabulary - for parser matching
     synonyms: List[str] = field(default_factory=list)       # Alternative names
     adjectives: List[str] = field(default_factory=list)     # Descriptive words
@@ -80,18 +81,27 @@ class Object(BaseObj) :
     Game Object class for all game objects.  Equivalent to ZIL OBJECT definition
     """
     # Core properties - match ZIL object properties
-    initial_description: str = str()                        # First-time description (FDESC)
+    fdesc: str = str()                          # First-time description (FDESC), not in people or doors
+    capacity: int = 0                           # All but doors
+    text: str = str()                           # All but doors
+
+    count: int = 0                              # Only in drugs
+    descfn: Optional[Callable] = None           # Only evidence and people
+    ldesc: str = str()                          # gobjects and objects
+    character: int = 0                          # Only people
+    state: int = 0                              # Only people
+    size: int = 0                               # All but doors, objects, and people
     
     # Containment hierarchy - ZIL's IN/LOC system
-    location: Optional['Object'] = None                     # Where this object is (LOC)
-    contents: List['Object'] = field(default_factory=list)  # What's inside
+    
+    #contents: List['Object'] = field(default_factory=list)  # What's inside
     
     # Properties dictionary - ZIL's property system
-    properties: Dict[str, Any] = field(default_factory=dict)
+    #properties: Dict[str, Any] = field(default_factory=dict)
     
     # State tracking
-    _original_location: Optional['Object'] = None
-    _state_variables: Dict[str, Any] = field(default_factory=dict)
+    #_original_location: Optional['Object'] = None
+    #_state_variables: Dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_json(cls, obj_id: str, obj_data: Dict[str, Any]) -> 'Object':
@@ -102,13 +112,25 @@ class Object(BaseObj) :
                 name=obj_id,
                 description=obj_data.get("description", ""),
                 flags=Object._parse_flags(obj_data.get("flags", [])),
+                location=obj_data.get("location"),
                 synonyms=obj_data.get("synonyms", []),
                 adjectives=obj_data.get("adjectives", []),            
-                location=obj_data.get("location"),
-                action_handler=obj_data.get("action"),
+                action_handler=obj_data.get("action", None),
                 
-                properties=obj_data.get("properties", {}),
-                contents=obj_data.get("contents", [])
+                fdesc=obj_data.get("fdesc", ""),
+                capacity=obj_data.get("capacity", 0),
+                text=obj_data.get("text", ""),
+
+
+                count=obj_data.get("count", 0),
+                descfn=obj_data.get("descfn", None),
+                ldesc=obj_data.get("ldesc", ""),
+                character=obj_data.get("character", 0),
+                state=obj_data.get("state", 0),
+                size=obj_data.get("size", 0)
+
+                #properties=obj_data.get("properties", {}),
+                #contents=obj_data.get("contents", [])
             )
             return obj
         

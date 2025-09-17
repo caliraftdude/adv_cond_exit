@@ -75,15 +75,6 @@
     "location": "GLOBAL-OBJECTS"
   },
   
-  "GLOBAL-MR-ROBNER": {
-    "description": "Mr. Robner",
-    "synonyms": ["robner", "father", "marshall"],
-    "adjectives": ["mr", "mister"],
-    "location": "GLOBAL-OBJECTS",
-    "flags": ["PERSON"],
-    "action": "GLOBAL-MR-ROBNER-F"
-  },
-  
   "BOOKSHELVES": {
     "description": "set of bookshelves",
     "synonyms": ["bookshelves", "shelves", "book", "books"],

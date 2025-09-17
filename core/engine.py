@@ -19,7 +19,6 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 
-
 class GameState(Enum):
     """Game state enumeration - matches ZIL game states"""
     PLAYING = auto()
@@ -113,8 +112,39 @@ class Engine:
             self.world_manager = WorldManager(self.manifest, self.data_path)
             self.world_manager.initialize_world() # should deal with init failure
 
+            # XXX porting starts here..
+            # from parser.parser import GameParser
 
+            # from game_time.time_manager import TimeManager
+            # from commands.base_command import CommandProcessor
+            # from game_io.interface import GameInterface
+            # from game_io.save_system import SaveManager
+            
+            # # Initialize world from data
+            # self.world_manager = WorldManager(self.game_data)
+            # self.world_manager.initialize_world()
+            
+            # # Initialize parser with vocabulary
+            # self.parser = GameParser(self.vocabulary, self.syntax_rules)
+            
+            # # Initialize time system
+            # self.time_manager = TimeManager(self.current_time)
+            # schedules_file = self.data_path / "schedules.json"
+            # if schedules_file.exists():
+            #     self.time_manager.load_schedules(schedules_file)
+            
+            # # Initialize command processor
+            # self.command_processor = CommandProcessor(self)
+            
+            # # Initialize user interface
+            # self.interface = GameInterface(self)
+            
+            # # Initialize save system
+            # self.save_manager = SaveManager(self)
+        
+            logger.info("All subsystems initialized")
 
+        # XXX Need a better exception...
         except Exception as e:
             pass
 
@@ -123,6 +153,7 @@ class Engine:
         Load a saved game state  -  Equivalent to ZIL's RESTORE routine
         """
         try:
+            # XXX Nothing here - a lot of work to implement this
             print(f"Loading game from {filename}...")
             return True
             #return self.save_manager.load(filename)
@@ -133,6 +164,8 @@ class Engine:
     def start_game(self) -> None:
         """Start the main game loop"""
         print("Starting game loop...")
+
+        
         pass
 
 
