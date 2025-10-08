@@ -1,10 +1,14 @@
 ###############################################################################
 #   core/engine.py
 #
-#   Integrated game engine to load and run text adventure games
+#   Integrated game engine to load and run text adventure games.  Since
+#   the API class is closely related and unfortunately circular, its maintained
+#   here to avoid frustrating import errors and nonsense.  This might need to 
+#   be refactored later - I am just not 100% sure how it would be organized at
+#   this time.
 #   
 ###############################################################################
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Union
 from enum import Flag, auto, Enum
 import logging
 from pathlib import Path
@@ -13,10 +17,13 @@ from dataclasses import dataclass
 
 from core.game_object import Manifest
 from world.world_manager import WorldManager
+from core.exceptions import GameException
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+    
 
 
 class GameState(Enum):
@@ -48,6 +55,7 @@ class Engine:
         
         # Game subsystems (will be initialized separately)
         self.world_manager: WorldManager = None
+        self.api: API = None
         self.parser = None
         self.time_manager = None
         self.command_processor = None
@@ -112,6 +120,7 @@ class Engine:
             self.world_manager = WorldManager(self.manifest, self.data_path)
             self.world_manager.initialize_world() # should deal with init failure
 
+            self.api = API(self)
             # XXX porting starts here..
             # from parser.parser import GameParser
 
@@ -165,7 +174,98 @@ class Engine:
         """Start the main game loop"""
         print("Starting game loop...")
 
+        print("##############################################################################################")
+        print("#\tTesting API calls and so on here...")
+        print("##############################################################################################")
+
+        function = self.world_manager.function_registry.get("init_globals")(self.api)
+        
+        print("AGGHHAA!!!")
         
         pass
+
+
+
+class API:
+    """
+    Main Game API class providing all game.* functions for action scripts.  This class maintains all 
+    game state and provides the interface for game actions to interact with the game world.
+    """
+    
+    def __init__(self, engine: Engine = None):
+        self.engine = engine
+
+    # ========== OUTPUT FUNCTIONS ==========
+    def TELL(self, text: str, end: str = "\n") -> None:
+        """
+        Output text to the player.
+        Equivalent to ZIL's TELL.
+        
+        Args:
+            text: Text to output
+            end: End character (default newline)
+        """
+        try:
+            self.output_buffer.append(text)
+            if end == "\n":
+                print(''.join(self.output_buffer))
+                self.output_buffer.clear()
+            logger.debug(f"TELL: {text}")
+        except Exception as e:
+            logger.error(f"Error in TELL: {e}")
+            raise GameException(f"Output error: {e}")
+    
+    def TELL_N(self, number: Union[int, float]) -> None:
+        """
+        Output a number to the player.
+        Equivalent to ZIL's PRINTN.
+        
+        Args:
+            number: Number to output
+        """
+        try:
+            self.TELL(str(number), end="")
+            logger.debug(f"TELL_N: {number}")
+        except Exception as e:
+            logger.error(f"Error in TELL_N: {e}")
+            raise GameException(f"Output number error: {e}")
+
+
+    # ========== GLOBAL VARIABLE FUNCTIONS ==========
+    def SETG(self, name: str, value: Any) -> None:
+        """
+        Set a global variable.
+        Equivalent to ZIL's SETG.
+        
+        Args:
+            name: Variable name
+            value: Value to set
+        """
+        try:
+            self.engine.world_manager.global_vars[name] = value
+            logger.debug(f"SETG: {name} = {value}")
+        except Exception as e:
+            logger.error(f"Error setting global {name}: {e}")
+            raise GameException(f"Cannot set global variable {name}: {e}")
+    
+    def GETG(self, name: str, default: Any = None) -> Any:
+        """
+        Get a global variable value.
+        Equivalent to ZIL's GVAL.
+        
+        Args:
+            name: Variable name
+            default: Default value if not found
+            
+        Returns:
+            The global variable value or default
+        """
+        try:
+            value = self.engine.world_manager.global_objects.get(name, None)
+            logger.debug(f"GETG: {name} = {value}")
+            return value
+        except Exception as e:
+            logger.error(f"Error getting global {name}: {e}")
+            raise GameException(f"Cannot get global variable {name}: {e}")
 
 

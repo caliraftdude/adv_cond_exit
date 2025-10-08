@@ -1,3 +1,76 @@
+"""
+world_manager.py
+Used to manage all the world objects
+
+
+
+
+Notes:
+GLOBAL and NON GLOBAL CHARACTERS
+The dual object system (regular and GLOBAL- versions) in ZIL/Infocom games serves a specific and clever purpose for handling character 
+references in different contexts. This is a common pattern in text adventure games to solve a particular problem.
+The Problem They Solve
+In text adventures, players need to be able to refer to characters in two distinct situations:
+
+1. When the character is present in the current room (DUNBAR)
+2. When talking/thinking about the character who isn't present (GLOBAL-DUNBAR)
+
+Why Two Objects?
+The Local Object (DUNBAR)
+    Location: Specific room (LIVING-ROOM)
+    Purpose: Represents the physical presence of the character
+    Features:
+        Has capacity (can carry items)
+        Has state (for tracking character behavior)
+        Has OPENBIT (can give/take items)
+        Uses character-specific action handler (DUNBAR-F)
+
+The Global Object (GLOBAL-DUNBAR)
+    Location: GLOBAL-OBJECTS (always accessible)
+    Purpose: Allows references when character isn't present
+    Features:
+        Minimal properties
+        Uses generic action handler (GLOBAL-PERSON)
+        Always available for parser matching
+
+Why This Design?
+1. Parser Flexibility: Players can always refer to any character
+2. Contextual Responses: Game knows if you're talking TO someone vs ABOUT someone
+3. Memory Efficiency: In 1982, having one object that moves around was more efficient than having copies in every room
+4. Clean Separation: Physical presence vs conceptual reference
+
+This pattern is common in text adventures and represents an elegant solution to the problem of allowing players to reference entities 
+that may or may not be physically present in the current scene.
+
+DIFFERENCE BETWEEN LOCAL-GLOBALS and GLOBAL-OBJECTS
+The difference between GLOBAL-OBJECTS and LOCAL-GLOBALS relates to the scope of object accessibility in different parts of the game map.
+GLOBAL-OBJECTS
+Objects that are universally accessible from anywhere in the game. These represent:
+
+    Abstract concepts (GLOBAL-MURDER, GLOBAL-SUICIDE)
+    People you can talk about but aren't present (GLOBAL-MR-ROBNER)
+    General references (GLOBAL-WEATHER, AIR, GROUND)
+    Things that exist conceptually everywhere (INTNUM for number parsing)
+
+LOCAL-GLOBALS
+Objects that are accessible in multiple related rooms but not everywhere. These represent physical features shared across connected areas:
+
+Why This Design?
+    Memory Efficiency: In 1982, this saved memory by not duplicating objects
+    Logical Grouping: Features naturally belong to certain area types
+    Simpler Management: One TELEPHONE object serves all rooms with phones
+    Consistent Behavior: Same sink behavior in all bathrooms
+
+This three-tier system (Local → Local-Global → Global) provides a sophisticated way to manage object visibility and accessibility based 
+on context, making the game world feel more coherent and realistic.
+
+
+
+
+"""
+
+
+
 import sys
 import logging
 import importlib
@@ -11,6 +84,7 @@ from pathlib import Path
 
 
 from core.game_object import Manifest, Object, Room
+from core.flags import ObjectFlag
 
 
 # Set up logging
@@ -31,13 +105,19 @@ class WorldManager:
         self.data_path: Path = data_path
 
         # Object registries
-        self.loaded_modules: Dict[str, Any] = {}
+        self.loaded_modules: Dict[str, Any] = {}            # not really needed
         self.function_registry: Dict[str, Callable] = {}
-        self.objects: Dict[str, Object] = {}
+
+        self.objects: Dict[str, Object] = {}                # objects (local)
+        self.local_globals: Dict[str, Object] = {}          # local global objects
+        self.global_objects: Dict[str, Object] = {}         # global objects
+        self.global_vars: Dict[str, Any] = {}               # Used to store global variables
+        self.characters: Dict[str, Object] = {}             # Characters and the player
+
         self.rooms: Dict[str, Room] = {}
 
         # Player
-        #self.player: Optional[Player] = None
+        self.player: Optional[Object] = None                # The player
         
         # Subsystem managers
         #self.room_manager = RoomManager()
@@ -74,7 +154,7 @@ class WorldManager:
                     success = False
 
             logger.info(f"Game module loaded: {success}")
-            logger.info(f"World initialized with  {len(self.objects)} objects , {len(self.rooms)} rooms, and {len(self.function_registry)} functions")
+            logger.info(f"World initialized with {len(self.objects)} objects, {len(self.local_globals)} local-globals, {len(self.global_objects)} global objects, {len(self.rooms)} rooms, and {len(self.function_registry)} functions")
             return success
         
         except Exception as e:
@@ -183,20 +263,37 @@ class WorldManager:
                 data:Dict = json.load(f)
             
             # Other ways to do this - but this is fine
-            objcount = len(self.objects)
-
-            # XXX Some temp BS
-            temp_dict:dict = dict()
+            objcount: int = 0
 
             # Create Object instances
             for obj_name, obj_data in data.items():
                 new_object = Object.from_json(obj_name, obj_data)
 
-                self.objects[obj_name] = new_object
-                logger.info(f"Created id [{new_object.id}]  object: {obj_name} ")
+                # Need to determine the correct location to put the objects into
+                # It may be unnecessary to do this and just do heavy searching on query
+                if new_object.location == "GLOBAL-OBJECTS":
+                    self.global_objects[obj_name] = new_object
+                    logger.info(f"Created id [{new_object.id}]  object: {obj_name} put into GLOBAL-OBJECTS")
 
+                elif new_object.location == "LOCAL-GLOBALS":
+                    self.local_globals[obj_name] = new_object
+                    logger.info(f"Created id [{new_object.id}]  object: {obj_name} put into LOCAL-GLOBALS")
+
+                elif ObjectFlag.PERSON in new_object.flags:
+                    if new_object.character == 0:
+                        self.player = new_object
+                        logger.info(f"Created id [{new_object.id}]  object: {obj_name} Player object created")
+                    else:
+                        self.characters[obj_name] = new_object
+                        logger.info(f"Created id [{new_object.id}]  object: {obj_name} put into characters")
+                else:
+                    self.objects[obj_name] = new_object
+                    logger.info(f"Created id [{new_object.id}]  object: {obj_name} put into objects")
+
+                objcount = objcount+1
+                
             
-            logger.info(f"Loaded {len(self.objects)-objcount} objects from {objects_path}")
+            logger.info(f"Loaded {objcount} objects from {objects_path}")
             return True
         
         except Exception as e:

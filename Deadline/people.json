@@ -5,7 +5,7 @@
     "synonyms": ["me", "player", "inspector"],
     "location": "SOUTH-LAWN",
     "action": "PLAYER-F",
-    "flags": ["NDESCBIT"],
+    "flags": ["PERSON", "NDESCBIT"],
     "character": 0
   },
   

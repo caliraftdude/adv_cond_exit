@@ -26,7 +26,8 @@ class ObjectFlag(Flag):
     LOCKED = auto()         # Container is locked (LOCKEDBIT)
     LOCKEDBIT = auto()      # Door is locked
     NARTICLE = auto()       # No article needed (NARTICLEBIT)
-    ONBIT = auto()             # Device is on (ONBIT)
+    NDESCBIT = auto()       # No describe bit
+    ONBIT = auto()          # Device is on (ONBIT)
     OPEN = auto()           # Container is open (OPENBIT)
     OPENBIT = auto()        # Door is currently open
     PERSON = auto()         # Is a person/character (PERSONBIT)

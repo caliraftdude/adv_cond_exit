@@ -51,3 +51,7 @@ class ResourceLoadError(GameException):
 class ActionRegistryError(GameException):
     """Exception raised when action registration fails"""
     pass
+
+class AttributeNotFoundButInJSON(GameException):
+    """Exception raised when deserializing a JSON file and finding that the corresponding class is missing an attribute"""
+    pass

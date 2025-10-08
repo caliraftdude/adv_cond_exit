@@ -8,7 +8,7 @@
 import json
 import logging
 import operator
-from typing import ClassVar, List, Dict, Optional, Callable, Any
+from typing import ClassVar, List, Dict, Optional, Callable, Any, Set
 from dataclasses import dataclass, field
 from enum import Enum, auto
 from pathlib import Path
@@ -28,10 +28,7 @@ from core.exceptions import ResourceLoadError
 # import sys
 # import inspect
 
-
-
-
-#if TYPE_CHECKING:
+#if TYPE_CHECKING:  - avoid loops and type checking wanks
     #from .property_system import PropertyManager
 
 # Configure logging
@@ -58,7 +55,7 @@ class BaseObj:
     adjectives: List[str] = field(default_factory=list)     # Descriptive words
 
     # Action handler - equivalent to ZIL's ACTION property
-    action_handler: Optional[Callable] = None               # Name of action routine
+    action: Optional[Callable] = None               # Name of action routine
 
     @staticmethod
     def _getObjectID() -> int:
@@ -86,7 +83,7 @@ class Object(BaseObj) :
     text: str = str()                           # All but doors
 
     count: int = 0                              # Only in drugs
-    descfn: Optional[Callable] = None           # Only evidence and people
+    descfcn: Optional[Callable] = None           # Only evidence and people
     ldesc: str = str()                          # gobjects and objects
     character: int = 0                          # Only people
     state: int = 0                              # Only people
@@ -109,29 +106,43 @@ class Object(BaseObj) :
         try:
             # Create Object instance
             obj = cls(
+                # Start with BaseObj attributes first
                 name=obj_id,
                 description=obj_data.get("description", ""),
                 flags=Object._parse_flags(obj_data.get("flags", [])),
                 location=obj_data.get("location"),
                 synonyms=obj_data.get("synonyms", []),
                 adjectives=obj_data.get("adjectives", []),            
-                action_handler=obj_data.get("action", None),
+                action=obj_data.get("action", None),
                 
+                # These are frequently found, but not in all object types
                 fdesc=obj_data.get("fdesc", ""),
                 capacity=obj_data.get("capacity", 0),
                 text=obj_data.get("text", ""),
 
-
+                # These are a little more specialized and specific to only 1 or 2 types
                 count=obj_data.get("count", 0),
-                descfn=obj_data.get("descfn", None),
+                descfcn=obj_data.get("descfn", None),
                 ldesc=obj_data.get("ldesc", ""),
                 character=obj_data.get("character", 0),
                 state=obj_data.get("state", 0),
                 size=obj_data.get("size", 0)
 
+                # ?  Not sure where Claude was going here - revisit later.
                 #properties=obj_data.get("properties", {}),
                 #contents=obj_data.get("contents", [])
             )
+
+            classattrs: Dict = obj.__dict__.keys()
+            json_obj_keys = obj_data.keys()
+            
+            a = set(json_obj_keys)
+            b = set(classattrs)
+
+            missing: Set = set(json_obj_keys) - set(classattrs)
+            if len(missing) > 0:
+                print(f"Attributes present in JSON objects, but missing in Object definition: {missing}, for objects {obj_id}")
+
             return obj
         
         except Exception as e:
@@ -210,7 +221,7 @@ class Room(BaseObj):
                 flags=Room._parse_flags(room_data.get("flags", [])),
                 synonyms=room_data.get("synonyms", []),
                 adjectives=room_data.get("adjectives", []),   
-                action_handler=room_data.get("action"),
+                action=room_data.get("action"),
 
                 exits=Room.parse_exits(room_data.get("exits", {}) ),
                 global_objects=room_data.get("global_objects", []),

@@ -192,39 +192,7 @@ class Game:
     
     # ========== OUTPUT FUNCTIONS ==========
     
-    def TELL(self, text: str, end: str = "\n") -> None:
-        """
-        Output text to the player.
-        Equivalent to ZIL's TELL.
-        
-        Args:
-            text: Text to output
-            end: End character (default newline)
-        """
-        try:
-            self.output_buffer.append(text)
-            if end == "\n":
-                print(''.join(self.output_buffer))
-                self.output_buffer.clear()
-            logger.debug(f"TELL: {text}")
-        except Exception as e:
-            logger.error(f"Error in TELL: {e}")
-            raise GameException(f"Output error: {e}")
-    
-    def TELL_N(self, number: Union[int, float]) -> None:
-        """
-        Output a number to the player.
-        Equivalent to ZIL's PRINTN.
-        
-        Args:
-            number: Number to output
-        """
-        try:
-            self.TELL(str(number), end="")
-            logger.debug(f"TELL_N: {number}")
-        except Exception as e:
-            logger.error(f"Error in TELL_N: {e}")
-            raise GameException(f"Output number error: {e}")
+
     
     def CRLF(self) -> None:
         """
@@ -262,43 +230,7 @@ class Game:
             logger.error(f"Error in DDESC: {e}")
             raise GameException(f"Door description error: {e}")
     
-    # ========== GLOBAL VARIABLE FUNCTIONS ==========
-    
-    def SETG(self, name: str, value: Any) -> None:
-        """
-        Set a global variable.
-        Equivalent to ZIL's SETG.
-        
-        Args:
-            name: Variable name
-            value: Value to set
-        """
-        try:
-            self.globals[name] = value
-            logger.debug(f"SETG: {name} = {value}")
-        except Exception as e:
-            logger.error(f"Error setting global {name}: {e}")
-            raise GameException(f"Cannot set global variable {name}: {e}")
-    
-    def GETG(self, name: str, default: Any = None) -> Any:
-        """
-        Get a global variable value.
-        Equivalent to ZIL's GVAL.
-        
-        Args:
-            name: Variable name
-            default: Default value if not found
-            
-        Returns:
-            The global variable value or default
-        """
-        try:
-            value = self.globals.get(name, default)
-            logger.debug(f"GETG: {name} = {value}")
-            return value
-        except Exception as e:
-            logger.error(f"Error getting global {name}: {e}")
-            raise GameException(f"Cannot get global variable {name}: {e}")
+
     
     def VAR(self, name: str) -> Any:
         """
